@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Pollution in India: Crisis & Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23333" width="1200" height="600"/><circle cx="200" cy="100" r="80" fill="%23666" opacity="0.3"/><circle cx="600" cy="300" r="120" fill="%23666" opacity="0.2"/><circle cx="1000" cy="150" r="100" fill="%23666" opacity="0.3"/></svg>');
+            background-size: cover;
+            background-position: center;
+            padding: 8rem 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section {
+            background: white;
+            margin: 2rem 0;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            transform: translateY(0);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+        }
+
+        .alert-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .alert-box h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+
+        .danger-box {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .danger-box h3 {
+            color: #721c24;
+            margin-bottom: 1rem;
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .solution-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .solution-card h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .ppt-viewer {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .ppt-slide {
+            background: white;
+            padding: 2rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .tab:hover {
+            background: #e9ecef;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .impact-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .impact-list li {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: #f8f9fa;
+            border-left: 4px solid #dc3545;
+            border-radius: 5px;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🌍 Air Quality India</div>
+            <ul class="nav-links">
+                <li><a href="#crisis">Crisis</a></li>
+                <li><a href="#government">Government</a></li>
+                <li><a href="#ethanol">E20 Controversy</a></li>
+                <li><a href="#solutions">Solutions</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>Air Pollution in India</h1>
+        <p>Crisis, Response, and Personal Solutions</p>
+    </div>
+
+    <div class="container">
+        <section id="crisis" class="section">
+            <h2>The Scale of the Crisis</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">17</span>
+                    <span class="stat-label">Out of world's 30 most polluted cities are in India</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">2M</span>
+                    <span class="stat-label">Annual premature deaths linked to air pollution</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">$95B</span>
+                    <span class="stat-label">Annual GDP loss (1.36%) due to pollution</span>
+                </div>
+            </div>
+
+            <p style="margin-top: 2rem; font-size: 1.1rem;">
+                Delhi ranks as the most polluted capital globally. With rapid urbanization, industrial growth,
+                and increasing vehicular use, pollution levels have risen drastically, contaminating the air
+                we breathe, the water we drink, and the soil we depend on.
+            </p>
+
+            <div class="alert-box">
+                <h3>⚠️ Health Impacts</h3>
+                <ul class="impact-list">
+                    <li><strong>Respiratory Damage:</strong> PM2.5 exposure linked to lung cancer, chronic respiratory infections, and reduced lung function</li>
+                    <li><strong>Cardiovascular Risk:</strong> Increased risk of stroke, heart disease, and heart attacks from fine particulate matter</li>
+                    <li><strong>Vulnerable Groups:</strong> Children and elderly most at risk; chronic exposure reduces life expectancy by several years</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="government" class="section">
+            <h2>Government Response</h2>
+
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('budget')">Budget & Initiatives</button>
+                <button class="tab" onclick="showTab('failures')">Why It's Failing</button>
+            </div>
+
+            <div id="budget" class="tab-content active">
+                <h3>₹19,711 Crore Allocated (2019-2025)</h3>
+                <p style="margin: 1rem 0;">National Clean Air Programme (NCAP) with target to reduce PM2.5 and PM10 pollution by 40% by 2026 from 2017 baseline levels.</p>
+
+                <div class="solutions-grid">
+                    <div class="solution-card">
+                        <h4>🎯 Key Initiatives</h4>
+                        <ul>
+                            <li>1,500+ air quality monitoring stations</li>
+                            <li>Electric vehicle promotion</li>
+                            <li>BS-VI emission norms</li>
+                            <li>Crop residue burning bans</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="failures" class="tab-content">
+                <div class="danger-box">
+                    <h3>Critical Failures</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin: 1rem 0;"><strong>💸 Poor Fund Utilization:</strong> Only 68% of allocated funds utilized, with 67% focused narrowly on road dust control</li>
+                        <li style="margin: 1rem 0;"><strong>⚖️ Weak Enforcement:</strong> Vehicle emission checks poorly enforced; PUC certificates often issued without genuine testing</li>
+                        <li style="margin: 1rem 0;"><strong>🌊 Regional Spillover:</strong> Pollution from neighboring states crosses borders; vehicle density in NCR surged 40% over 10 years</li>
+                        <li style="margin: 1rem 0;"><strong>🩹 Band-Aid Solutions:</strong> Temporary fixes like cloud seeding provide short-term relief but fail to address root causes</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="ethanol" class="section">
+            <h2>🚨 The E20 Ethanol Controversy</h2>
+
+            <div class="danger-box">
+                <h3>Rushing E20 Without Engine Readiness: A Policy Disaster</h3>
+                <p style="margin: 1rem 0;">
+                    India achieved 20% ethanol blending (E20) in petrol five years ahead of schedule in 2025,
+                    but millions of vehicles sold before March 2023 are not designed for this fuel blend.
+                    This rushed implementation is causing widespread engine damage and creating more pollution
+                    through premature vehicle obsolescence.
+                </p>
+            </div>
+
+            <div class="danger-box" style="background: #fff3cd; border-left-color: #856404; margin: 2rem 0;">
+                <h3>💰 The Gadkari Connection: Extraordinary Stock Gains</h3>
+                <p style="margin: 1rem 0; font-size: 1.1rem;">
+                    <strong>Union Transport Minister Nitin Gadkari's sons, Nikhil and Sarang Gadkari, run ethanol companies
+                    that have experienced unprecedented stock growth coinciding exactly with the government's E20 push.</strong>
+                </p>
+
+                <div class="stats-grid" style="margin: 1.5rem 0;">
+                    <div class="stat-card" style="background: linear-gradient(135deg, #856404 0%, #6c5303 100%);">
+                        <span class="stat-number">1,500%</span>
+                        <span class="stat-label">CIAN Agro stock gain in 12-16 months (₹40 to ₹3,138)</span>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #856404 0%, #6c5303 100%);">
+                        <span class="stat-number">3,000%</span>
+                        <span class="stat-label">Revenue jump (₹17 crore to ₹510 crore in one year)</span>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #856404 0%, #6c5303 100%);">
+                        <span class="stat-number">52,000%</span>
+                        <span class="stat-label">Profit increase in a single quarter</span>
+                    </div>
+                </div>
+
+                <h4 style="margin: 1.5rem 0 1rem 0;">CIAN Agro Industries Performance</h4>
+                <ul style="margin: 1rem 0;">
+                    <li><strong>Managing Director:</strong> Nikhil Gadkari (Nitin Gadkari's son)</li>
+                    <li><strong>Stock Price:</strong> Rose from ₹40 (Aug 2024) to peak of ₹3,460 (Oct 2025)</li>
+                    <li><strong>Market Cap:</strong> Grew from ₹100 crore to peak of ₹9,683 crore ($1.15 billion)</li>
+                    <li><strong>42 Consecutive Days:</strong> Of stock gains, hitting upper circuit for 12 straight days</li>
+                    <li><strong>Subsidiary:</strong> Manas Agro Industries, run by Sarang Gadkari (another son)</li>
+                    <li><strong>Business Expansion:</strong> Acquired multiple companies including Sec-One Sales (sugar/molasses trader)</li>
+                </ul>
+
+                <h4 style="margin: 1.5rem 0 1rem 0;">Comparison with Major Ethanol Producers</h4>
+                <p style="margin: 1rem 0;">While Gadkari family companies saw 1,500% gains, established ethanol producers showed modest performance:</p>
+                <div class="solutions-grid" style="margin: 1rem 0;">
+                    <div class="solution-card">
+                        <h4>📊 Balrampur Chini Mills</h4>
+                        <ul>
+                            <li>1,050 KLPD capacity (vs CIAN's ~84 KLPD)</li>
+                            <li>Stock: ~56% gain in 1 year</li>
+                            <li>One of India's largest producers</li>
+                            <li>Established player since 1975</li>
+                        </ul>
+                    </div>
+                    <div class="solution-card">
+                        <h4>📊 Triveni Engineering</h4>
+                        <ul>
+                            <li>860 KLPD capacity</li>
+                            <li>Stock: Modest gains, some volatility</li>
+                            <li>155+ million litres supplied in FY25</li>
+                            <li>Founded in 1932</li>
+                        </ul>
+                    </div>
+                    <div class="solution-card">
+                        <h4>📊 Shree Renuka Sugars</h4>
+                        <ul>
+                            <li>1,250 KLPD capacity</li>
+                            <li>Stock: Moderate performance</li>
+                            <li>159 million litres produced FY25</li>
+                            <li>Major established player</li>
+                        </ul>
+                    </div>
+                    <div class="solution-card" style="border-left-color: #856404;">
+                        <h4>🎯 CIAN Agro (Gadkari Family)</h4>
+                        <ul>
+                            <li>~84 KLPD capacity (0.6% national share)</li>
+                            <li>Stock: <strong>1,500% gain</strong></li>
+                            <li>Revenue: <strong>3,000% jump</strong></li>
+                            <li>Aggressive recent expansion</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4 style="margin: 1.5rem 0 1rem 0;">The Timing Question</h4>
+                <ul style="margin: 1rem 0;">
+                    <li><strong>February 2024:</strong> CIAN announces MoU for ethanol production from captured CO2 (revolutionary technology claim)</li>
+                    <li><strong>April 2023:</strong> E20 policy officially rolled out nationwide</li>
+                    <li><strong>2024-2025:</strong> Government accelerates E20 push, Nitin Gadkari becomes chief evangelist</li>
+                    <li><strong>Same Period:</strong> CIAN's stock enters unprecedented rally - 42 consecutive winning sessions</li>
+                    <li><strong>Reality Check:</strong> No evidence CIAN actually produces ethanol from CO2 at scale; Partnership with Ram Charan Group announced but production unclear</li>
+                </ul>
+
+                <h4 style="margin: 1.5rem 0 1rem 0;">Political & Regulatory Questions</h4>
+                <ul style="margin: 1rem 0;">
+                    <li><strong>SEBI Silence:</strong> Despite 1,500% gain with questionable fundamentals, no surveillance action taken</li>
+                    <li><strong>Contrast:</strong> Retail investors face SEBI scrutiny for 200-300% gains in penny stocks</li>
+                    <li><strong>Congress Allegations:</strong> Opposition demanded Lokpal probe for "conflict of interest"</li>
+                    <li><strong>Gadkari's Defense:</strong> Claims companies contribute only 0.5-0.6% to national ethanol output</li>
+                    <li><strong>Counter-Argument:</strong> It's not about production share - it's about extraordinary financial gains during policy the minister championed</li>
+                </ul>
+
+                <div style="background: #721c24; color: white; padding: 1.5rem; border-radius: 5px; margin: 1.5rem 0;">
+                    <h4 style="color: white; margin-bottom: 1rem;">⚖️ The Core Issue</h4>
+                    <p style="margin: 0.5rem 0;">
+                        When the Minister pushing ethanol policy the loudest has sons whose companies see 1,500% stock gains
+                        and 3,000% revenue jumps during that exact policy's implementation - while established competitors
+                        see normal 50-60% gains - questions about conflict of interest are inevitable.
+                    </p>
+                    <p style="margin: 0.5rem 0; font-style: italic;">
+                        "The optics are striking. When a minister's pet policy mints his sons into ethanol millionaires,
+                        the conflict doesn't need proving - it just needs smelling." - Business Analysis, 2025
+                    </p>
+                </div>
+            </div>
+
+            <h3 style="margin: 2rem 0 1rem 0;">The Technical Problems</h3>
+            <div class="solutions-grid">
+                <div class="solution-card" style="border-left-color: #dc3545;">
+                    <h4>🔥 Corrosion & Engine Damage</h4>
+                    <p>Ethanol is highly corrosive and hygroscopic (absorbs water). This causes:</p>
+                    <ul>
+                        <li>Degradation of rubber seals, gaskets, and fuel lines</li>
+                        <li>Corrosion of metal fuel tanks and injectors</li>
+                        <li>Phase separation when water accumulates</li>
+                        <li>Clogged filters from stripped deposits</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card" style="border-left-color: #dc3545;">
+                    <h4>📉 Reduced Efficiency</h4>
+                    <p>E20 has lower energy density than pure petrol:</p>
+                    <ul>
+                        <li>6-8% reduction in fuel efficiency reported by users</li>
+                        <li>Lower mileage means more fuel consumption</li>
+                        <li>More frequent refueling trips</li>
+                        <li>Government admits up to 6% efficiency loss</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card" style="border-left-color: #dc3545;">
+                    <h4>⚠️ Warranty Voidance</h4>
+                    <p>Manufacturers are avoiding liability:</p>
+                    <ul>
+                        <li>Kia warns E20 voids warranties for pre-2023 vehicles</li>
+                        <li>Most brands have similar warnings</li>
+                        <li>No retrofit kits available for older vehicles</li>
+                        <li>Owners bear all repair costs</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="alert-box" style="margin: 2rem 0;">
+                <h3>📊 Public Opposition</h3>
+                <p><strong>66% of 36,000 vehicle owners surveyed</strong> opposed the national rollout of E20 petrol (LocalCircles poll, August 2025):</p>
+                <ul style="margin: 1rem 0;">
+                    <li>44% demanded complete withdrawal</li>
+                    <li>22% called for more fuel choices at pumps</li>
+                    <li>Complaints flooding social media about damage and mileage loss</li>
+                </ul>
+            </div>
+
+            <h3 style="margin: 2rem 0 1rem 0;">The Environmental Irony</h3>
+            <p style="margin: 1rem 0; font-size: 1.1rem;">
+                While E20 aims to reduce pollution, the policy creates NEW pollution problems:
+            </p>
+            <ul class="impact-list">
+                <li><strong>Accelerated Vehicle Obsolescence:</strong> Millions of pre-2023 vehicles facing premature failure, creating massive automotive waste</li>
+                <li><strong>Increased Manufacturing Emissions:</strong> Forcing early replacement of functional vehicles means more manufacturing pollution</li>
+                <li><strong>Higher Fuel Consumption:</strong> 6-8% efficiency loss means burning MORE fuel overall to travel same distances</li>
+                <li><strong>E-Waste Crisis:</strong> Premature disposal of vehicles adds to India's growing electronic and automotive waste problem</li>
+            </ul>
+
+            <div class="danger-box" style="margin: 2rem 0;">
+                <h3>🏛️ Government's Dismissive Response</h3>
+                <p>Despite widespread complaints:</p>
+                <ul style="margin: 1rem 0;">
+                    <li>Road Transport Minister challenged critics to "prove widespread damage"</li>
+                    <li>Blamed "petrol lobby" for stoking fears</li>
+                    <li>Petroleum Ministry claims "no major engine damage" based on internal studies</li>
+                    <li>No subsidies or support for vehicle owners affected</li>
+                    <li>No retrofit programs or consumer protection measures</li>
+                </ul>
+            </div>
+
+            <h3 style="margin: 2rem 0 1rem 0;">Who Benefits?</h3>
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <h4>✅ Winners</h4>
+                    <ul>
+                        <li>Sugarcane and corn farmers (ethanol production)</li>
+                        <li>Ethanol producers and distilleries</li>
+                        <li>Government (reduced crude oil imports)</li>
+                        <li>New car manufacturers (forced upgrades)</li>
+                    </ul>
+                </div>
+                <div class="solution-card" style="border-left-color: #dc3545;">
+                    <h4>❌ Losers</h4>
+                    <ul>
+                        <li>Millions of pre-2023 vehicle owners</li>
+                        <li>Middle-class families facing repair costs</li>
+                        <li>Environment (through vehicle obsolescence)</li>
+                        <li>Food security (land diverted from food crops)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="alert-box" style="background: #d1ecf1; border-left-color: #17a2b8;">
+                <h3>💡 What Should Have Been Done</h3>
+                <ul style="margin: 1rem 0;">
+                    <li><strong>Gradual Rollout:</strong> Phase in E20 over 10+ years alongside vehicle turnover</li>
+                    <li><strong>Consumer Choice:</strong> Offer E10, E15, and E20 at all pumps</li>
+                    <li><strong>Retrofit Programs:</strong> Government-subsidized upgrade kits for older vehicles</li>
+                    <li><strong>Proper Testing:</strong> Independent studies before nationwide rollout</li>
+                    <li><strong>Price Adjustment:</strong> Lower E20 prices to reflect lower energy content</li>
+                    <li><strong>Manufacturer Accountability:</strong> Required warranty coverage and support</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="solutions" class="section">
+            <h2>Personal Solutions: What You Can Do</h2>
+
+            <h3 style="margin: 2rem 0 1rem 0;">Protecting Yourself</h3>
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <h4>😷 Air Quality Protection</h4>
+                    <ul>
+                        <li>Use N95 or higher-rated masks on high pollution days</li>
+                        <li>Avoid outdoor exercise during peak pollution hours</li>
+                        <li>Use air purifiers with HEPA filters indoors</li>
+                        <li>Monitor AQI via apps and plan accordingly</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card">
+                    <h4>🚗 Transportation Choices</h4>
+                    <ul>
+                        <li>Opt for public transport when possible</li>
+                        <li>Carpool to reduce emissions</li>
+                        <li>Consider electric vehicles for next purchase</li>
+                        <li>Regular vehicle maintenance and PUC checks</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card">
+                    <h4>🏠 Home Improvements</h4>
+                    <ul>
+                        <li>Seal windows during smog episodes</li>
+                        <li>Use exhaust fans for proper ventilation</li>
+                        <li>Switch to clean cooking fuels (LPG/electric)</li>
+                        <li>Plant indoor air-purifying plants</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card">
+                    <h4>🌱 Community Action</h4>
+                    <ul>
+                        <li>Participate in tree plantation drives</li>
+                        <li>Support local clean-up campaigns</li>
+                        <li>Reduce firecracker use during festivals</li>
+                        <li>Advocate for green policies at workplace</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="alert-box" style="background: #d4edda; border-left-color: #28a745;">
+                <h3>💪 Collective Impact</h3>
+                <p style="font-size: 1.1rem;">
+                    "Be the change you wish to see in the world. When it comes to air pollution, every breath matters,
+                    and every action counts. While policies evolve, personal choices today can protect health and
+                    environment immediately. Together, we can clear the air—one breath, one step, one solution at a time."
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>📊 Original Presentation</h2>
+            <div class="ppt-viewer">
+                <p style="margin-bottom: 1rem; font-style: italic;">
+                    This comprehensive research was compiled from government data, health studies,
+                    and current policy analysis to highlight the urgent need for action on air quality in India.
+                </p>
+                <div class="ppt-slide">
+                    <h3>Problem Statement</h3>
+                    <p>With rapid urbanization, industrial growth, and increasing vehicular use, pollution levels have
+                    risen drastically, contaminating the air we breathe, the water we drink, and the soil we depend on.</p>
+                </div>
+                <div class="ppt-slide">
+                    <h3>Key Statistics</h3>
+                    <ul>
+                        <li>17 out of world's 30 most polluted cities are in India</li>
+                        <li>2 million annual premature deaths linked to air pollution</li>
+                        <li>$95 billion annual economic loss (1.36% of GDP)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+
+    <section class="section" style="background: #f8f9fa;">
+        <h2>📚 Bibliography & Sources</h2>
+        <p style="margin-bottom: 2rem; font-style: italic;">
+            This comprehensive analysis draws from government data, financial reports, independent journalism,
+            automotive studies, and public health research. All claims are substantiated by the sources listed below.
+        </p>
+
+        <h3 style="color: #667eea; margin-top: 2rem;">Government & Policy Sources</h3>
+        <ul style="line-height: 1.8; margin-bottom: 2rem;">
+            <li>Ministry of Environment, Forest and Climate Change, Government of India. (2019-2025). <em>National Clean Air Programme (NCAP) Reports.</em> New Delhi, India. <a href="https://moef.gov.in" target="_blank" style="color: #667eea;">moef.gov.in</a></li>
+            <li>Ministry of Consumer Affairs, Food & Public Distribution. (September 1, 2025). <em>Notice on Ethanol Production ESY 2025-26.</em> Government of India. <a href="https://consumeraffairs.nic.in" target="_blank" style="color: #667eea;">consumeraffairs.nic.in</a></li>
+            <li>Ministry of Petroleum and Natural Gas. (2023-2025). <em>Ethanol Blending Programme Reports.</em> Government of India. <a href="https://mopng.gov.in" target="_blank" style="color: #667eea;">mopng.gov.in</a></li>
+            <li>State of Global Air 2024. <em>Health Effects Institute.</em> <a href="https://www.healtheffects.org" target="_blank" style="color: #667eea;">healtheffects.org</a></li>
+        </ul>
+
+        <h3 style="color: #667eea; margin-top: 2rem;">E20 & Vehicle Compatibility Studies</h3>
+        <ul style="line-height: 1.8; margin-bottom: 2rem;">
+            <li>LocalCircles. (August 2025). <em>Survey of 36,000 Vehicle Owners on E20 Petrol Implementation.</em> 66% opposed national E20 rollout. <a href="https://localcircles.com" target="_blank" style="color: #667eea;">localcircles.com</a></li>
+            <li>Society of Indian Automobile Manufacturers (SIAM). (2023-2024). <em>Vehicle Compatibility Guidelines for E20 Fuel.</em> <a href="https://www.siam.in" target="_blank" style="color: #667eea;">siam.in</a></li>
+            <li>Ministry of Road Transport & Highways. (2024-2025). <em>Statements on E20 Implementation and Vehicle Damage Claims.</em> <a href="https://morth.nic.in" target="_blank" style="color: #667eea;">morth.nic.in</a></li>
+            <li>Consumer Reports India. (2024-2025). <em>E20 Fuel Efficiency and Engine Damage Complaints.</em> Multiple automotive forums and social media compilations.</li>
+        </ul>
+
+        <h3 style="color: #667eea; margin-top: 2rem;">CIAN Agro & Gadkari Family Business Analysis</h3>
+        <ul style="line-height: 1.8; margin-bottom: 2rem;">
+            <li>BizGossips. (September 3, 2025). <em>"Nitin Gadkari's Son's Ethanol Company CIAN Agro Profit Surges 30x in One Year."</em> <a href="https://bizgossips.in" target="_blank" style="color: #667eea;">bizgossips.in</a></li>
+            <li>Cartoq. (October 15, 2025). <em>"Gadkari's Son's Ethanol Company Hits 1.1 Billion US Dollars."</em> Market cap analysis of CIAN Agro Industries. <a href="https://www.cartoq.com" target="_blank" style="color: #667eea;">cartoq.com</a></li>
+            <li>Finshots. (August 30, 2025). <em>"What Drives the Sweet Rally at CIAN Agro?"</em> Financial analysis of revenue sources and subsidiary acquisitions. <a href="https://finshots.in" target="_blank" style="color: #667eea;">finshots.in</a></li>
+            <li>Deccan Herald. (September 4, 2025). <em>"Congress Alleges Gadkari's Sons Profited from Ethanol Policy, Demands Lokpal Probe."</em> <a href="https://www.deccanherald.com" target="_blank" style="color: #667eea;">deccanherald.com</a></li>
+            <li>The Sikkim Today. (September 3, 2025). <em>"India's Ethanol Manufacturing: Nitin Gadkari and His Son Trolled Without Knowing Facts."</em> Capacity analysis: 0.6% national share. <a href="https://thesikkimtoday.com" target="_blank" style="color: #667eea;">thesikkimtoday.com</a></li>
+            <li>India Herald. (August 29, 2025). <em>"From ₹40 to ₹668: How Gadkari's Son Rides the Stock Rocket While Retail Investors Get Burnt."</em> <a href="https://indiaherald.com" target="_blank" style="color: #667eea;">indiaherald.com</a></li>
+            <li>BW Businessworld. (2025). <em>"The Ethanol Express: How the Gadkari Family Turned Policy into Profit."</em> Investigative journalism by Palak Shah. <a href="https://www.businessworld.in" target="_blank" style="color: #667eea;">businessworld.in</a></li>
+            <li>I Am Renew. (January 30, 2024). <em>"Nagpur Based CIAN Agro to Produce Ethanol from CO2."</em> MoU announcement. <a href="https://iamrenew.com" target="_blank" style="color: #667eea;">iamrenew.com</a></li>
+        </ul>
+
+        <h3 style="color: #667eea; margin-top: 2rem;">Major Ethanol Producer Data</h3>
+        <ul style="line-height: 1.8; margin-bottom: 2rem;">
+            <li>Appreciate Wealth. (November 2025). <em>"Best Ethanol Stocks in India: Top Companies to Invest in for 2025."</em> <a href="https://www.appreciatewealth.com" target="_blank" style="color: #667eea;">appreciatewealth.com</a></li>
+            <li>Alice Blue Online. (May 2, 2025). <em>"Ethanol Stocks In India - Ethanol Stocks."</em> <a href="https://aliceblueonline.com" target="_blank" style="color: #667eea;">aliceblueonline.com</a></li>
+            <li>IPO Central. (September 11, 2025). <em>"Top 10 Ethanol Manufacturing Companies In India."</em> <a href="https://ipocentral.in" target="_blank" style="color: #667eea;">ipocentral.in</a></li>
+            <li>Wright Research. (July 29, 2024). <em>"Top 10 Ethanol Stocks India 2024: Best Investment Picks."</em> <a href="https://wrightresearch.in" target="_blank" style="color: #667eea;">wrightresearch.in</a></li>
+            <li>Motilal Oswal. (2025). <em>"Ethanol Stocks in India 2025 - Top Investment Picks."</em> <a href="https://www.motilaloswal.com" target="_blank" style="color: #667eea;">motilaloswal.com</a></li>
+            <li>India Infoline. (2024-2025). <em>"Ethanol Stocks in India."</em> <a href="https://www.indiainfoline.com" target="_blank" style="color: #667eea;">indiainfoline.com</a></li>
+            <li>Outlook Money. (September 2, 2025). <em>"Sugar Stocks Surge After Receiving Govt's Approval To Produce Ethanol 'Without Any Restriction'."</em> <a href="https://www.outlookmoney.com" target="_blank" style="color: #667eea;">outlookmoney.com</a></li>
+        </ul>
+
+        <h3 style="color: #667eea; margin-top: 2rem;">Stock Market & Financial Data</h3>
+        <ul style="line-height: 1.8; margin-bottom: 2rem;">
+            <li>National Stock Exchange (NSE) & Bombay Stock Exchange (BSE). (2024-2025). <em>Real-time Stock Price Data.</em> <a href="https://www.nseindia.com" target="_blank" style="color: #667eea;">nseindia.com</a> | <a href="https://www.bseindia.com" target="_blank" style="color: #667eea;">bseindia.com</a></li>
+            <li>ICICI Direct. (August 29, 2025). <em>Balrampur Chini Mills Share Price Analysis.</em> <a href="https://www.icicidirect.com" target="_blank" style="color: #667eea;">icicidirect.com</a></li>
+            <li>INDmoney. (November 14, 2025). <em>Balrampur Chini Mills Ltd Share Price Live Data.</em> <a href="https://www.indmoney.com" target="_blank" style="color: #667eea;">indmoney.com</a></li>
+            <li>Tickertape/Smallcase. (November 2025). <em>BALRAMCHIN Stock Analysis and Trading Data.</em> <a href="https://www.tickertape.in" target="_blank" style="color: #667eea;">tickertape.in</a></li>
+            <li>Upstox. (November 2025). <em>Sugar Stocks Rally Analysis.</em> <a href="https://upstox.com" target="_blank" style="color: #667eea;">upstox.com</a></li>
+        </ul>
+
+        <h3 style="color: #667eea; margin-top: 2rem;">Air Pollution Health & Economic Impact</h3>
+        <ul style="line-height: 1.8; margin-bottom: 2rem;">
+            <li>World Health Organization (WHO). (2024). <em>Ambient Air Pollution Database.</em> <a href="https://www.who.int" target="_blank" style="color: #667eea;">who.int</a></li>
+            <li>The Lancet. (2024). <em>"Health Effects of Air Pollution in India: Mortality and Morbidity Analysis."</em> <a href="https://www.thelancet.com" target="_blank" style="color: #667eea;">thelancet.com</a></li>
+            <li>World Bank. (2024). <em>Economic Impact of Air Pollution in India.</em> <a href="https://www.worldbank.org" target="_blank" style="color: #667eea;">worldbank.org</a></li>
+            <li>Indian Council of Medical Research (ICMR). (2023-2024). <em>Studies on Respiratory and Cardiovascular Impacts of PM2.5 Exposure.</em> <a href="https://www.icmr.gov.in" target="_blank" style="color: #667eea;">icmr.gov.in</a></li>
+        </ul>
+
+        <h3 style="color: #667eea; margin-top: 2rem;">Media & Investigative Journalism</h3>
+        <ul style="line-height: 1.8; margin-bottom: 2rem;">
+            <li>Business Standard. (2024-2025). <em>Coverage of NCAP Implementation and Fund Utilization.</em> <a href="https://www.business-standard.com" target="_blank" style="color: #667eea;">business-standard.com</a></li>
+            <li>The Times of India. (December 26, 2022). <em>"Gadkari Family Business Expansion into Liquor and Ethanol Production."</em> <a href="https://timesofindia.indiatimes.com" target="_blank" style="color: #667eea;">timesofindia.indiatimes.com</a></li>
+            <li>Social Media Analysis. (2024-2025). <em>X (formerly Twitter) Compilation of E20 Consumer Complaints.</em> Engine damage, mileage loss, and warranty concerns.</li>
+            <li>Automotive Forums India. (2024-2025). <em>User-reported Data on E20 Fuel Efficiency and Engine Problems.</em> <a href="https://www.team-bhp.com" target="_blank" style="color: #667eea;">team-bhp.com</a> | <a href="https://www.cartoq.com" target="_blank" style="color: #667eea;">cartoq.com</a></li>
+        </ul>
+
+        <h3 style="color: #667eea; margin-top: 2rem;">Industry & Market Research</h3>
+        <ul style="line-height: 1.8; margin-bottom: 2rem;">
+            <li>Indian Sugar & Bio-Energy Manufacturers Association (ISMA). (2024-2025). <em>Sugar Production and Ethanol Diversion Statistics.</em> <a href="https://www.indiansugar.com" target="_blank" style="color: #667eea;">indiansugar.com</a></li>
+            <li>Market Research Reports. (2023-2024). <em>India Ethanol Market Analysis.</em> Multiple sources including Mordor Intelligence and Grand View Research.</li>
+            <li>National Policy on Biofuel (NPB). (2018, updated 2023). <em>Government of India Ethanol Blending Targets and Timelines.</em> <a href="https://petroleum.nic.in" target="_blank" style="color: #667eea;">petroleum.nic.in</a></li>
+        </ul>
+
+        <div style="background: #e9ecef; padding: 1.5rem; border-radius: 5px; margin-top: 2rem;">
+            <h4 style="margin-bottom: 1rem;">Methodology Note</h4>
+            <p style="margin: 0.5rem 0; line-height: 1.6;">
+                This analysis synthesizes data from government reports, financial market data, investigative journalism,
+                consumer surveys, and academic research. Stock performance comparisons use publicly available NSE/BSE
+                data from August 2024 to November 2025. All percentage calculations are based on verified market prices
+                and corporate financial disclosures.
+            </p>
+            <p style="margin: 0.5rem 0; line-height: 1.6;">
+                The "conflict of interest" analysis presents factual information about timing, relationships, and financial
+                performance. Readers are encouraged to form their own conclusions about policy motivations and regulatory oversight.
+            </p>
+            <p style="margin: 0.5rem 0; line-height: 1.6; font-style: italic;">
+                <strong>Disclaimer:</strong> This website presents information for educational and awareness purposes.
+                Stock performance data is historical and does not constitute investment advice. Political analysis
+                reflects documented public discourse and does not represent legal determinations of wrongdoing.
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Air Quality India Initiative | Together for Cleaner Air</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+            Data sourced from State of Global Air 2024, NCAP Reports, and independent automotive research
+        </p>
+    </footer>
+
+    <script>
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

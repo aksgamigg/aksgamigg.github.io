@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduMerge - Text Editor Built for Students</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        nav .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 2rem 80px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.4s backwards;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 80px 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        /* Features Section */
+        .features {
+            background: #f8f9fa;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* Screenshots Section */
+        .screenshots {
+            background: white;
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .screenshot-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .screenshot-card:hover {
+            transform: scale(1.02);
+        }
+
+        .screenshot-placeholder {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .screenshot-card h3 {
+            padding: 1.5rem;
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        .screenshot-card p {
+            padding: 0 1.5rem 1.5rem;
+            color: #666;
+        }
+
+        /* Comparison Table */
+        .comparison {
+            background: #f8f9fa;
+        }
+
+        table {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 1.5rem;
+            text-align: left;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        td:first-child {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* FAQ Section */
+        .faq {
+            background: white;
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: #f8f9fa;
+            margin-bottom: 1.5rem;
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .faq-item:hover {
+            transform: translateX(5px);
+        }
+
+        .faq-question {
+            color: #667eea;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-answer {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* Use Cases Section */
+        .use-cases {
+            background: white;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .use-case {
+            padding: 2rem;
+            border-left: 4px solid #667eea;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .use-case h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .use-case ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .use-case li {
+            padding: 0.5rem 0;
+            color: #666;
+        }
+
+        .use-case li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        /* Demo Section */
+        .demo {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .demo-video {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .demo-placeholder {
+            background: rgba(0,0,0,0.3);
+            padding: 100px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Download Section */
+        .download {
+            background: #1a1a2e;
+            color: white;
+            text-align: center;
+        }
+
+        .download-card {
+            background: #16213e;
+            padding: 3rem;
+            border-radius: 15px;
+            max-width: 700px;
+            margin: 2rem auto;
+            transition: transform 0.3s;
+        }
+
+        .download-card:hover {
+            transform: scale(1.02);
+        }
+
+        .download-card h3 {
+            margin-bottom: 1.5rem;
+            color: #667eea;
+            font-size: 2rem;
+        }
+
+        .download-card p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .code-box {
+            background: rgba(0,0,0,0.4);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: left;
+            margin: 1.5rem 0;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .code-box code {
+            color: #a6e3a1;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            display: block;
+            line-height: 1.8;
+        }
+
+        .requirements {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #0f0f1e;
+            color: white;
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #667eea;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            nav .nav-links {
+                display: none;
+            }
+
+            .features-grid, .use-case-grid, .screenshot-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="#" class="logo">📝 EduMerge</a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#screenshots">Screenshots</a></li>
+                <li><a href="https://aksweb.me/EduMerge-Documentation" target="_blank">Documentation</a></li>
+                <li><a href="#download">Download</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Text Editor Built for Students</h1>
+            <p>Create, edit, and automate documents with powerful mail merge capabilities. EduMerge combines simplicity with advanced features—perfect for students and educators.</p>
+            <div class="cta-buttons">
+                <a href="#download" class="btn btn-primary">Download Now</a>
+                <a href="https://aksweb.me/EduMerge-Documentation" target="_blank" class="btn btn-secondary">Documentation</a>
+                <a href="https://github.com/aksgamigg/EduMerge" target="_blank" class="btn btn-secondary">View on GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose EduMerge?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">✍️</div>
+                    <h3>Rich Text Editing</h3>
+                    <p>Full-featured editor with bold, italics, font customization, and syntax-aware editing. Works with TXT, DOCX, and PDF files seamlessly.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Powerful Mail Merge</h3>
+                    <p>Import CSV or Excel files and generate personalized documents for multiple recipients automatically. Save hours of manual work.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📤</div>
+                    <h3>Export Anywhere</h3>
+                    <p>Export your documents to DOCX or PDF format with all formatting intact. Professional-grade output every time.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Modern Interface</h3>
+                    <p>Clean, intuitive design built with ttkbootstrap. Easy to learn, powerful to use. No bloat, just the features you need.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privacy First</h3>
+                    <p>All processing happens locally on your machine. No cloud uploads, no data collection. Your documents stay yours.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Lightweight & Fast</h3>
+                    <p>Minimal system requirements. Fast startup, responsive editing. Built in Python for cross-platform compatibility.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section id="screenshots" class="screenshots">
+        <div class="container">
+            <h2 class="section-title">See It In Action</h2>
+            <div class="screenshot-grid">
+                <div class="screenshot-card">
+                    <div class="screenshot-placeholder">📝</div>
+                    <h3>Text Editor Interface</h3>
+                    <p>Clean, distraction-free writing environment with formatting toolbar and sidebar controls.</p>
+                </div>
+                <div class="screenshot-card">
+                    <div class="screenshot-placeholder">🔄</div>
+                    <h3>Mail Merge in Action</h3>
+                    <p>Simple placeholder system - type [name] in your template and generate personalized files instantly.</p>
+                </div>
+                <div class="screenshot-card">
+                    <div class="screenshot-placeholder">📊</div>
+                    <h3>CSV Table Viewer</h3>
+                    <p>Built-in table viewer for managing recipient data with search and pagination.</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 2rem; color: #666;">
+                <em>Screenshots coming soon! Meanwhile, <a href="#download" style="color: #667eea;">download and try it yourself</a></em>
+            </p>
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section id="comparison" class="comparison">
+        <div class="container">
+            <h2 class="section-title">How Does EduMerge Compare?</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>EduMerge</th>
+                        <th>Google Docs</th>
+                        <th>Microsoft Word</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Privacy</td>
+                        <td>✅ 100% Local</td>
+                        <td>❌ Cloud-based</td>
+                        <td>⚠️ Cloud option</td>
+                    </tr>
+                    <tr>
+                        <td>Cost</td>
+                        <td>✅ Free Forever</td>
+                        <td>✅ Free</td>
+                        <td>❌ $70/year</td>
+                    </tr>
+                    <tr>
+                        <td>Mail Merge</td>
+                        <td>✅ Built-in, Easy</td>
+                        <td>⚠️ Add-ons Required</td>
+                        <td>⚠️ Complex Setup</td>
+                    </tr>
+                    <tr>
+                        <td>Offline Use</td>
+                        <td>✅ Always</td>
+                        <td>⚠️ Limited</td>
+                        <td>✅ Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Open Source</td>
+                        <td>✅ Yes</td>
+                        <td>❌ No</td>
+                        <td>❌ No</td>
+                    </tr>
+                    <tr>
+                        <td>Bloatware</td>
+                        <td>✅ Zero</td>
+                        <td>⚠️ Some</td>
+                        <td>❌ Heavy</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">Why not just use Microsoft Word or Google Docs?</div>
+                    <div class="faq-answer">EduMerge is purpose-built for students who value privacy and simplicity. Unlike Word or Docs, all your data stays on your device—no cloud uploads, no tracking. Plus, mail merge is built-in and dead simple: just type [name] and go.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Is my data safe?</div>
+                    <div class="faq-answer">Absolutely. EduMerge processes everything locally on your computer. No internet connection required, no data ever leaves your device. It's like working with a notebook—completely private.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Can I export to PDF?</div>
+                    <div class="faq-answer">EduMerge exports to DOCX format, which you can then convert to PDF using Word, LibreOffice, or any office suite. This keeps the app lightweight while giving you full formatting control.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Does it work offline?</div>
+                    <div class="faq-answer">Yes! EduMerge is 100% offline. No internet required for any feature. Perfect for working anywhere, anytime.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">What platforms does it support?</div>
+                    <div class="faq-answer">EduMerge works on Windows, Linux, and macOS. Just install Python 3.8+ and you're good to go. The dependency installer handles all the setup automatically.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">How do I get help if I'm stuck?</div>
+                    <div class="faq-answer">Check out the comprehensive documentation, run diagnostics.py for troubleshooting, or open an issue on GitHub. The community is here to help!</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section id="use-cases" class="use-cases">
+        <div class="container">
+            <h2 class="section-title">Perfect For</h2>
+            <div class="use-case-grid">
+                <div class="use-case">
+                    <h3>👨‍🎓 Students</h3>
+                    <ul>
+                        <li>Create assignments and reports</li>
+                        <li>Generate personalized cover letters for internships</li>
+                        <li>Batch-create project documentation</li>
+                        <li>Manage and format academic papers</li>
+                    </ul>
+                </div>
+
+                <div class="use-case">
+                    <h3>👨‍🏫 Teachers</h3>
+                    <ul>
+                        <li>Generate personalized grade reports</li>
+                        <li>Create certificates for multiple students</li>
+                        <li>Mass-produce assignment sheets with student names</li>
+                        <li>Automate report card generation</li>
+                    </ul>
+                </div>
+
+                <div class="use-case">
+                    <h3>📊 Administrators</h3>
+                    <ul>
+                        <li>Create mass communications with personalization</li>
+                        <li>Generate admission letters</li>
+                        <li>Automate form letter creation</li>
+                        <li>Produce event invitations and materials</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="demo">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Watch a Demo</h2>
+            <div class="demo-video">
+                <div class="demo-placeholder">
+                    📹 Demo video coming soon!<br>
+                    <small style="opacity: 0.8;">Meanwhile, download and try it yourself</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="download">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Ready to Get Started?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
+                EduMerge is completely free and open-source. Download and run with Python.
+            </p>
+
+            <div class="download-card">
+                <h3>🐍 Download with Python</h3>
+                <p>EduMerge runs on any system with Python 3.8+</p>
+
+                <div class="requirements">
+                    <strong>Requirements:</strong> Python 3.8 or higher installed on your system
+                </div>
+
+                <div class="code-box">
+                    <code>
+                        # Clone the repository<br>
+                        git clone https://github.com/aksgamigg/EduMerge.git<br>
+                        cd EduMerge<br><br>
+
+                        # Install dependencies automatically<br>
+                        python dependency-installer.py<br><br>
+
+                        # Restart your terminal, then run<br>
+                        python EduMerge.py
+                    </code>
+                </div>
+
+                <p style="margin-top: 1.5rem; font-size: 0.95rem; opacity: 0.8;">
+                    The dependency installer will automatically set up all required libraries including ttkbootstrap, Pillow, python-docx, pdf2image, and pypdf.
+                </p>
+
+                <div style="margin-top: 2rem;">
+                    <a href="https://github.com/aksgamigg/EduMerge" target="_blank" class="btn btn-primary">View on GitHub</a>
+                </div>
+
+                <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.7;">
+                    💡 <strong>Troubleshooting:</strong> If you encounter issues, run <code style="background: rgba(0,0,0,0.3); padding: 0.2rem 0.5rem; border-radius: 3px;">python diagnostics.py</code> after restarting your terminal
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="https://aksweb.me/EduMerge-Documentation" target="_blank">Documentation</a>
+                <a href="https://github.com/aksgamigg/EduMerge" target="_blank">GitHub</a>
+                <a href="https://github.com/aksgamigg/EduMerge/issues" target="_blank">Report Bug</a>
+                <a href="https://github.com/aksgamigg/EduMerge/issues" target="_blank">Feature Request</a>
+                <a href="mailto:akshajgoel@bnpsramvihar.edu.in">Contact</a>
+            </div>
+            <p style="opacity: 0.7;">&copy; 2025 EduMerge. Built for Student Hackpad 2025.</p>
+            <p style="opacity: 0.5; font-size: 0.9rem; margin-top: 1rem;">
+                Made with ❤️ by <a href="https://github.com/aksgamigg" target="_blank" style="color: #667eea; text-decoration: none;">Akshaj Goel</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduMerge Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar h2 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
+        }
+
+        .sidebar nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            transition: background 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .sidebar nav a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Main Content */
+        .content {
+            margin-left: 280px;
+            padding: 3rem;
+            max-width: 1000px;
+        }
+
+        header {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            color: #764ba2;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        h4 {
+            font-size: 1.2rem;
+            color: #555;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        h5 {
+            font-size: 1.1rem;
+            color: #666;
+            margin-top: 1rem;
+            margin-bottom: 0.6rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: #1e1e1e;
+            color: #a6e3a1;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-left: 4px solid #667eea;
+        }
+
+        pre code {
+            background: none;
+            color: #a6e3a1;
+            padding: 0;
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.8rem;
+            line-height: 1.7;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .feature-card h4 {
+            color: #667eea;
+            margin-top: 0;
+        }
+
+        .keyboard-shortcut {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9em;
+            margin: 0.2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1.5rem 0;
+        }
+
+        .tip {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1.5rem 0;
+        }
+
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <h2>📝 EduMerge Docs</h2>
+        <nav>
+            <a href="#getting-started">Getting Started</a>
+            <a href="#installation">Installation</a>
+            <a href="#text-editor">Text Editor</a>
+            <a href="#mail-merge">Mail Merge</a>
+            <a href="#file-formats">File Formats</a>
+            <a href="#keyboard-shortcuts">Keyboard Shortcuts</a>
+            <a href="#troubleshooting">Troubleshooting</a>
+            <a href="#advanced">Advanced Features</a>
+            <a href="#api-reference">API Reference</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <header>
+            <h1>EduMerge Documentation</h1>
+            <p>Complete guide to using EduMerge's text editor and mail merge features</p>
+        </header>
+
+        <!-- Getting Started -->
+        <section id="getting-started">
+            <h2>Getting Started</h2>
+
+            <h3>What is EduMerge?</h3>
+            <p>EduMerge is a powerful, student-focused text editor with integrated mail merge capabilities. Built with Python and ttkbootstrap, it provides:</p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>✍️ Rich Text Editing</h4>
+                    <p>Full formatting support with bold, italic, underline, and custom fonts</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🔄 Mail Merge</h4>
+                    <p>Automate personalized document creation for multiple recipients</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📤 Multiple Formats</h4>
+                    <p>Support for TXT, CSV, DOCX, and PDF files</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🔒 Privacy First</h4>
+                    <p>All processing happens locally—no cloud, no tracking</p>
+                </div>
+            </div>
+
+            <h3>Requirements</h3>
+            <ul>
+                <li><strong>Python 3.8+</strong> installed on your system</li>
+                <li><strong>Operating System:</strong> Windows, Linux, or macOS</li>
+                <li><strong>Dependencies:</strong> Automatically installed via <code>dependency-installer.py</code></li>
+            </ul>
+        </section>
+
+        <!-- Installation -->
+        <section id="installation">
+            <h2>Installation</h2>
+
+            <h3>Step 1: Clone the Repository</h3>
+            <pre><code>git clone https://github.com/aksgamigg/EduMerge.git
+cd EduMerge</code></pre>
+
+            <h3>Step 2: Install Dependencies</h3>
+            <p>Run the automatic dependency installer:</p>
+            <pre><code>python dependency-installer.py</code></pre>
+
+            <p>This will install all required libraries:</p>
+            <ul>
+                <li><code>ttkbootstrap</code> - Modern UI framework</li>
+                <li><code>Pillow</code> - Image processing</li>
+                <li><code>python-docx</code> - Word document handling</li>
+                <li><code>pdf2image</code> - PDF viewing capabilities</li>
+                <li><code>pypdf</code> - PDF manipulation</li>
+            </ul>
+
+            <div class="warning">
+                <strong>⚠️ Important:</strong> After installation, restart your terminal to ensure all dependencies are recognized.
+            </div>
+
+            <h3>Step 3: Verify Installation</h3>
+            <p>Run the diagnostics tool to check if everything is properly installed:</p>
+            <pre><code>python diagnostics.py</code></pre>
+
+            <h3>Step 4: Launch EduMerge</h3>
+            <pre><code>python EduMerge.py</code></pre>
+
+            <div class="success">
+                <strong>✅ Success!</strong> You should now see the EduMerge starting window.
+            </div>
+        </section>
+
+        <!-- Text Editor -->
+        <section id="text-editor">
+            <h2>Text Editor</h2>
+
+            <h3>Interface Overview</h3>
+            <p>The text editor features a modern three-panel layout:</p>
+            <ul>
+                <li><strong>Left Sidebar:</strong> File operations, insert content, and export options</li>
+                <li><strong>Main Area:</strong> Tabbed interface with text editor, CSV viewer, and PDF viewer</li>
+                <li><strong>Toolbar:</strong> Font controls, text styling, headings, and color options</li>
+            </ul>
+
+            <h3>Basic Operations</h3>
+
+            <h4>Creating a New Document</h4>
+            <ol>
+                <li>Click <strong>📄 New Document</strong> in the sidebar</li>
+                <li>If you have unsaved changes, you'll be prompted to save</li>
+                <li>Start typing in the text area</li>
+            </ol>
+
+            <h4>Opening Files</h4>
+            <p>EduMerge supports multiple file formats:</p>
+            <ul>
+                <li><strong>.txt</strong> - Plain text files</li>
+                <li><strong>.csv</strong> - Spreadsheet data (opens in CSV Table tab)</li>
+                <li><strong>.docx</strong> - Microsoft Word documents</li>
+                <li><strong>.pdf</strong> - PDF files (read-only, opens in PDF Viewer tab)</li>
+            </ul>
+
+            <h4>Saving Files</h4>
+            <ul>
+                <li><strong>Save:</strong> Save to current file (Ctrl+S)</li>
+                <li><strong>Save As:</strong> Save with new name/location</li>
+            </ul>
+
+            <h3>Text Formatting</h3>
+
+            <h4>Basic Styles</h4>
+            <table>
+                <tr>
+                    <th>Style</th>
+                    <th>Button</th>
+                    <th>Shortcut</th>
+                    <th>Usage</th>
+                </tr>
+                <tr>
+                    <td>Bold</td>
+                    <td>𝐁</td>
+                    <td><span class="keyboard-shortcut">Ctrl+B</span></td>
+                    <td>Emphasis, headings</td>
+                </tr>
+                <tr>
+                    <td>Italic</td>
+                    <td>𝐼</td>
+                    <td><span class="keyboard-shortcut">Ctrl+I</span></td>
+                    <td>Emphasis, quotes</td>
+                </tr>
+                <tr>
+                    <td>Underline</td>
+                    <td>U̲</td>
+                    <td><span class="keyboard-shortcut">Ctrl+U</span></td>
+                    <td>Important text</td>
+                </tr>
+            </table>
+
+            <h4>Headings</h4>
+            <ul>
+                <li><strong>H1 (Red):</strong> Main titles - 32pt, bold, red color</li>
+                <li><strong>H2 (Blue):</strong> Section headings - 24pt, bold, blue color</li>
+                <li><strong>H3 (Green):</strong> Subsections - 18pt, bold, green color</li>
+            </ul>
+
+            <div class="tip">
+                <strong>💡 Tip:</strong> Select text first, then click the formatting button. To remove formatting, select the text and click the button again.
+            </div>
+
+            <h4>Fonts</h4>
+            <p>Change font family and size using the toolbar:</p>
+            <ul>
+                <li><strong>Available Fonts:</strong> Segoe UI, Arial, Times New Roman, Calibri, Georgia, Courier New, Consolas</li>
+                <li><strong>Size Range:</strong> 8pt to 72pt</li>
+            </ul>
+
+            <h4>Colors</h4>
+            <ul>
+                <li><strong>🎨 Text:</strong> Change text color</li>
+                <li><strong>🎨 BG:</strong> Change background color (highlight)</li>
+            </ul>
+
+            <h3>Inserting Content</h3>
+
+            <h4>Images</h4>
+            <ol>
+                <li>Click <strong>🖼️ Insert Image</strong> in sidebar</li>
+                <li>Select image file (PNG, JPG, GIF, BMP supported)</li>
+                <li>Image is automatically resized if wider than 700px</li>
+            </ol>
+
+            <div class="warning">
+                <strong>⚠️ Note:</strong> Images are embedded in the document but lost when saving as .txt. Use DOCX export to preserve images.
+            </div>
+
+            <h4>CSV Tables</h4>
+            <ol>
+                <li>Click <strong>📊 CSV Table</strong> in sidebar</li>
+                <li>Open a CSV file</li>
+                <li>View data in searchable, paginated table format</li>
+            </ol>
+
+            <h3>Exporting Documents</h3>
+
+            <h4>Export to DOCX</h4>
+            <p>Creates a Microsoft Word document:</p>
+            <pre><code># Click "📄 Export DOCX" in sidebar
+# Choose save location
+# Each paragraph becomes a separate Word paragraph</code></pre>
+
+            <h4>Export to PDF</h4>
+            <p>For PDF export, use one of these methods:</p>
+            <ol>
+                <li>Export to DOCX first, then convert using Word/LibreOffice</li>
+                <li>Use your browser's "Print to PDF" feature</li>
+            </ol>
+        </section>
+
+        <!-- Mail Merge -->
+        <section id="mail-merge">
+            <h2>Mail Merge</h2>
+
+            <h3>What is Mail Merge?</h3>
+            <p>Mail Merge automates the creation of personalized documents for multiple recipients. Perfect for:</p>
+            <ul>
+                <li>Student certificates</li>
+                <li>Grade reports</li>
+                <li>Invitation letters</li>
+                <li>Cover letters for multiple applications</li>
+                <li>Personalized announcements</li>
+            </ul>
+
+            <h3>Step-by-Step Guide</h3>
+
+            <h4>Step 1: Launch Mail Merge</h4>
+            <ol>
+                <li>Run <code>python EduMerge.py</code></li>
+                <li>Click <strong>📧 Mail Merge</strong> on the starting screen</li>
+            </ol>
+
+            <h4>Step 2: Enter Recipient Names</h4>
+            <p>You have two options:</p>
+
+            <h5>Option A: Manual Insert</h5>
+            <ol>
+                <li>Choose "Manual Insert"</li>
+                <li>Enter the number of recipients (minimum 2)</li>
+                <li>Enter each name when prompted</li>
+                <li>Names are automatically converted to Title Case</li>
+            </ol>
+
+            <div class="tip">
+                <strong>💡 Valid Names:</strong> Names can only contain letters, spaces, and hyphens (e.g., "John Smith", "Mary-Jane")
+            </div>
+
+            <h5>Option B: Text File</h5>
+            <ol>
+                <li>Choose "Text File"</li>
+                <li>Prepare a .txt file with names in this format:</li>
+            </ol>
+            <pre><code>Alice Johnson, Bob Williams, Charlie Brown, Diana Prince</code></pre>
+            <ul>
+                <li>Names must be separated by <code>, </code> (comma + space)</li>
+                <li>All names on one line</li>
+            </ul>
+
+            <h4>Step 3: Create Letter Content</h4>
+            <p>Use the special placeholder <code>[name]</code> where you want the recipient's name to appear:</p>
+
+            <pre><code>Dear [name],
+
+Congratulations on your excellent performance this semester!
+
+We are pleased to inform you, [name], that you have been selected 
+for the Academic Excellence Award.
+
+Best regards,
+Principal's Office</code></pre>
+
+            <p>You can provide the letter in two ways:</p>
+            <ul>
+                <li><strong>Browse:</strong> Select an existing .txt file</li>
+                <li><strong>Type Letter Content:</strong> Type directly in the dialog box</li>
+            </ul>
+
+            <div class="warning">
+                <strong>⚠️ Important:</strong> The <code>[name]</code> placeholder is case-sensitive. Use exactly <code>[name]</code>, not <code>[Name]</code> or <code>[NAME]</code>.
+            </div>
+
+            <h4>Step 4: Choose Output Folder</h4>
+            <ol>
+                <li>Select where you want to save the generated letters</li>
+                <li>Each letter will be saved as <code>RecipientName's Mail.txt</code></li>
+            </ol>
+
+            <h4>Step 5: Success!</h4>
+            <p>When complete:</p>
+            <ul>
+                <li>You'll see a success message</li>
+                <li>The output folder opens automatically</li>
+                <li>Each recipient gets a personalized letter file</li>
+            </ul>
+
+            <h3>Example Workflow</h3>
+            <pre><code># Names entered: Alice, Bob, Charlie
+# Letter template:
+"Dear [name], Welcome to our program!"
+
+# Generated files:
+Alice's Mail.txt → "Dear Alice, Welcome to our program!"
+Bob's Mail.txt → "Dear Bob, Welcome to our program!"
+Charlie's Mail.txt → "Dear Charlie, Welcome to our program!"</code></pre>
+
+            <h3>Advanced Tips</h3>
+            <ul>
+                <li>Use <code>[name]</code> multiple times in the same letter</li>
+                <li>Combine with text formatting before running mail merge</li>
+                <li>Export merged letters to DOCX for professional formatting</li>
+                <li>If a file already exists, EduMerge creates <code>Name's Mail(1).txt</code> to avoid overwriting</li>
+            </ul>
+        </section>
+
+        <!-- File Formats -->
+        <section id="file-formats">
+            <h2>Supported File Formats</h2>
+
+            <h3>.TXT (Plain Text)</h3>
+            <ul>
+                <li><strong>Read:</strong> ✅ Full support</li>
+                <li><strong>Write:</strong> ✅ Full support</li>
+                <li><strong>Features:</strong> Basic text, UTF-8 encoding</li>
+                <li><strong>Note:</strong> Formatting and images are lost when saved as .txt</li>
+            </ul>
+
+            <h3>.CSV (Comma-Separated Values)</h3>
+            <ul>
+                <li><strong>Read:</strong> ✅ Full support</li>
+                <li><strong>Write:</strong> ✅ Full support</li>
+                <li><strong>Features:</strong> Table view with search and pagination</li>
+                <li><strong>Use Case:</strong> Viewing and editing spreadsheet data</li>
+            </ul>
+
+            <h3>.DOCX (Microsoft Word)</h3>
+            <ul>
+                <li><strong>Read:</strong> ✅ Plain text extraction</li>
+                <li><strong>Write:</strong> ✅ Export with basic formatting</li>
+                <li><strong>Limitations:</strong> Complex formatting not preserved on import</li>
+                <li><strong>Export:</strong> Each paragraph saved separately</li>
+            </ul>
+
+            <h3>.PDF (Portable Document Format)</h3>
+            <ul>
+                <li><strong>Read:</strong> ✅ View-only (rendered as images)</li>
+                <li><strong>Write:</strong> ❌ Use DOCX → PDF workflow</li>
+                <li><strong>Requirements:</strong> <code>pdf2image</code> and Poppler</li>
+                <li><strong>Note:</strong> PDF loading may take time for large files</li>
+            </ul>
+
+            <div class="warning">
+                <strong>⚠️ PDF Loading:</strong> When opening PDFs, the editor may freeze briefly. A progress bar indicates loading is in progress.
+            </div>
+        </section>
+
+        <!-- Keyboard Shortcuts -->
+        <section id="keyboard-shortcuts">
+            <h2>Keyboard Shortcuts</h2>
+
+            <table>
+                <tr>
+                    <th>Action</th>
+                    <th>Shortcut</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>New Document</td>
+                    <td><span class="keyboard-shortcut">Ctrl+N</span></td>
+                    <td>Create a new blank document</td>
+                </tr>
+                <tr>
+                    <td>Open File</td>
+                    <td><span class="keyboard-shortcut">Ctrl+O</span></td>
+                    <td>Open file dialog</td>
+                </tr>
+                <tr>
+                    <td>Save</td>
+                    <td><span class="keyboard-shortcut">Ctrl+S</span></td>
+                    <td>Save current document</td>
+                </tr>
+                <tr>
+                    <td>Bold</td>
+                    <td><span class="keyboard-shortcut">Ctrl+B</span></td>
+                    <td>Toggle bold on selected text</td>
+                </tr>
+                <tr>
+                    <td>Italic</td>
+                    <td><span class="keyboard-shortcut">Ctrl+I</span></td>
+                    <td>Toggle italic on selected text</td>
+                </tr>
+                <tr>
+                    <td>Underline</td>
+                    <td><span class="keyboard-shortcut">Ctrl+U</span></td>
+                    <td>Toggle underline on selected text</td>
+                </tr>
+            </table>
+
+            <div class="tip">
+                <strong>💡 Pro Tip:</strong> You can select text and use multiple shortcuts in succession (e.g., Ctrl+B then Ctrl+I for bold italic text).
+            </div>
+        </section>
+
+        <!-- Troubleshooting -->
+        <section id="troubleshooting">
+            <h2>Troubleshooting</h2>
+
+            <h3>Installation Issues</h3>
+
+            <h4>Dependencies Not Installing</h4>
+            <p><strong>Problem:</strong> <code>dependency-installer.py</code> fails</p>
+            <p><strong>Solution:</strong></p>
+            <ol>
+                <li>Ensure you're using Python 3.8+: <code>python --version</code></li>
+                <li>Try manual installation: <code>pip install ttkbootstrap Pillow python-docx pdf2image pypdf</code></li>
+                <li>Restart terminal after installation</li>
+            </ol>
+
+            <h4>PDF Support Not Working</h4>
+            <p><strong>Problem:</strong> Can't open PDF files</p>
+            <p><strong>Solution:</strong></p>
+            <ol>
+                <li>Install Poppler (required for PDF viewing)</li>
+                <li><strong>Windows:</strong> Download from <code>https://blog.alivate.com.au/poppler-windows/</code></li>
+                <li><strong>Linux:</strong> <code>sudo apt-get install poppler-utils</code></li>
+                <li><strong>macOS:</strong> <code>brew install poppler</code></li>
+                <li>Run <code>python diagnostics.py</code> to verify</li>
+            </ol>
+
+            <h3>Runtime Issues</h3>
+
+            <h4>Application Won't Start</h4>
+            <p><strong>Problem:</strong> Error when running <code>EduMerge.py</code></p>
+            <p><strong>Solution:</strong></p>
+            <pre><code># Run diagnostics first
+python diagnostics.py
+
+# Check for missing dependencies
+# Reinstall if needed
+python dependency-installer.py</code></pre>
+
+            <h4>Logo/Images Not Showing</h4>
+            <p><strong>Problem:</strong> Logo or UI images missing</p>
+            <p><strong>Solution:</strong> Ensure these files exist in the EduMerge directory:</p>
+            <ul>
+                <li><code>logo.png</code></li>
+                <li><code>logo.ico</code></li>
+                <li><code>label.png</code></li>
+            </ul>
+
+            <h4>Unsaved Changes Not Detected</h4>
+            <p><strong>Problem:</strong> Document shows as saved when it shouldn't</p>
+            <p><strong>Solution:</strong> This is a known limitation. Always manually save (Ctrl+S) before closing.</p>
+
+            <h3>Mail Merge Issues</h3>
+
+            <h4>[name] Not Replaced</h4>
+            <p><strong>Problem:</strong> Generated letters still show <code>[name]</code></p>
+            <p><strong>Solution:</strong></p>
+            <ul>
+                <li>Check spelling: must be <code>[name]</code> exactly</li>
+                <li>Case-sensitive: <code>[Name]</code> or <code>[NAME]</code> won't work</li>
+                <li>Include the square brackets</li>
+            </ul>
+
+            <h4>Names File Not Accepted</h4>
+            <p><strong>Problem:</strong> Text file rejected when importing names</p>
+            <p><strong>Solution:</strong> Ensure format is correct:</p>
+            <pre><code>John Smith, Jane Doe, Bob Johnson</code></pre>
+            <ul>
+                <li>Comma followed by space between names</li>
+                <li>All names on a single line</li>
+                <li>No trailing comma</li>
+            </ul>
+
+            <h3>Performance Issues</h3>
+
+            <h4>PDF Loading is Slow</h4>
+            <p><strong>Problem:</strong> Application freezes when opening large PDFs</p>
+            <p><strong>Solution:</strong> This is normal for large PDFs. Wait for the loading window to close. For very large PDFs, consider:</p>
+            <ul>
+                <li>Splitting PDF into smaller files</li>
+                <li>Reducing PDF quality/size before opening</li>
+                <li>Using a dedicated PDF viewer instead</li>
+            </ul>
+
+            <h3>Getting Help</h3>
+            <p>If you encounter issues not covered here:</p>
+            <ol>
+                <li>Check the <a href="https://github.com/aksgamigg/EduMerge/issues" target="_blank">GitHub Issues</a> page</li>
+                <li>Run <code>python diagnostics.py</code> and share the output</li>
+                <li>Open a new issue with details about your problem</li>
+                <li>Email: akshajgoel@bnpsramvihar.edu.in</li>
+            </ol>
+        </section>
+
+        <!-- Advanced Features -->
+        <section id="advanced">
+            <h2>Advanced Features</h2>
+
+            <h3>Custom Text Formatting</h3>
+            <p>Beyond the basic formatting buttons, you can create complex formatting combinations:</p>
+            <ul>
+                <li>Select text and apply multiple styles (bold + italic + underline)</li>
+                <li>Mix different heading levels in the same document</li>
+                <li>Apply custom colors to specific words or phrases</li>
+            </ul>
+
+            <h3>CSV Table Features</h3>
+            <p>The CSV Table view includes:</p>
+            <ul>
+                <li><strong>Searchable:</strong> Filter rows by keyword</li>
+                <li><strong>Paginated:</strong> Navigate large datasets easily</li>
+                <li><strong>Sortable:</strong> Click column headers to sort</li>
+            </ul>
+
+            <h3>Window Dragging</h3>
+            <p>Custom dialogs in EduMerge are frameless but draggable:</p>
+            <ul>
+                <li>Click and hold anywhere on the dialog</li>
+                <li>Drag to reposition</li>
+                <li>Useful for viewing content behind the dialog</li>
+            </ul>
+
+            <h3>Status Bar Information</h3>
+            <p>The bottom status bar shows:</p>
+            <ul>
+                <li><strong>Lines:</strong> Total line count</li>
+                <li><strong>Characters:</strong> Total character count (including spaces)</li>
+                <li><strong>Words:</strong> Word count</li>
+                <li><strong>File Type:</strong> Current document format</li>
+            </ul>
+        </section>
+
+        <!-- API Reference -->
+        <section id="api-reference">
+            <h2>API Reference</h2>
+
+            <h3>Main Classes</h3>
+
+            <h4>ModernEditorApp</h4>
+            <p>Main text editor application class.</p>
+            <pre><code>class ModernEditorApp:
+    def __init__(self, root)
+
+    # File operations
+    def new_file(self)
+    def open_file(self)
+    def save_file(self)
+    def save_as_file(self)
+
+    # Text formatting
+    def apply_bold(self)
+    def apply_italic(self)
+    def apply_underline(self)
+    def apply_heading(self, heading_tag)
+    def change_font(self)
+    def change_text_color(self)
+    def change_bg_color(self)
+
+    # Content insertion
+    def insert_image(self)
+    def create_csv_table(self)
+
+    # Export methods
+    def export_to_docx(self)
+    def export_to_pdf(self)
+
+    # File format handlers
+    def open_csv(self, filepath)
+    def open_docx(self, filepath)
+    def open_pdf(self, filepath)</code></pre>
+
+            <h4>Letter</h4>
+            <p>Handles mail merge letter generation.</p>
+            <pre><code>class Letter:
+    def __init__(self)
+
+    # Core methods
+    def process_letter_content(self)
+    def generate_personalized_letters(self)
+    def show_placeholder_instructions(self)</code></pre>
+
+            <h4>NameManager</h4>
+            <p>Manages recipient name collection.</p>
+            <pre><code>class NameManager:
+    def __init__(self)
+
+    # Collection methods
+    def name_collection(self)
+    def collect_names_manually(self)
+    def names_text_file_processing(self)
+    def confirm_names_proceed(self)</code></pre>
+
+            <h3>Custom Dialogs</h3>
+
+            <h4>CustomBox</h4>
+            <p>General-purpose message box with custom buttons.</p>
+            <pre><code>CustomBox(buttons=["OK", "Cancel"], message="Your message", image_y=40)</code></pre>
+
+            <h4>IntBox</h4>
+            <p>Dialog for integer input (spinbox).</p>
+            <pre><code>dialog = IntBox(buttons=["Continue", "Exit"], message="Enter number:")
+value = dialog.result  # Returns integer
+choice = dialog.choice  # Returns button clicked</code></pre>
+
+            <h4>StringBox</h4>
+            <p>Dialog for single-line text input.</p>
+            <pre><code>dialog = StringBox(buttons=["OK", "Cancel"], message="Enter text:")
+text = dialog.result  # Returns string
+choice = dialog.choice  # Returns button clicked</code></pre>
+
+            <h4>TextBox</h4>
+            <p>Dialog for multi-line text input.</p>
+            <pre><code>dialog = TextBox(buttons=["Save", "Cancel"], message="Enter content:")
+content = dialog.result  # Returns text content
+choice = dialog.choice  # Returns button clicked</code></pre>
+
+            <h3>Utility Functions</h3>
+            <pre><code># Center a window on screen
+center_window(window)
+
+# Show exit confirmation
+exit_confirmation()
+show_exit_confirmation(callback_function)</code></pre>
+        </section>
+
+        <footer style="text-align: center; padding: 3rem 0; color: #999;">
+            <p>EduMerge Documentation • Made with ❤️ by <a href="https://github.com/aksgamigg" style="color: #667eea;">Akshaj Goel</a></p>
+            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Need help? <a href="https://github.com/aksgamigg/EduMerge/issues" style="color: #667eea;">Report an issue</a></p>
+        </footer>
+    </div>
+</body>
+</html>
