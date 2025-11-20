@@ -1,1 +1,0 @@
-# aksgamigg.github.io
