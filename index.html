@@ -15,64 +15,170 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0a0a0a;
             min-height: 100vh;
-            padding: 2rem;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(78, 205, 196, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, rgba(255, 198, 107, 0.3) 0%, transparent 50%);
+            animation: bgFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes bgFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.1); }
         }
 
         .container {
             max-width: 1200px;
             width: 100%;
             margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Hero Section */
+        /* Floating Particles */
+        .particle {
+            position: fixed;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.6;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-100px) translateX(50px); }
+            50% { transform: translateY(-50px) translateX(-30px); }
+            75% { transform: translateY(-150px) translateX(20px); }
+        }
+
+        /* Hero Section with Typing Effect */
         .hero {
             text-align: center;
             color: white;
             margin-bottom: 4rem;
-            animation: fadeInDown 1s ease;
+            padding: 4rem 0;
+            position: relative;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 4rem;
             margin-bottom: 1rem;
             text-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            animation: glowPulse 3s ease-in-out infinite;
         }
 
-        .hero p {
-            font-size: 1.3rem;
+        @keyframes glowPulse {
+            0%, 100% { text-shadow: 0 4px 6px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.3); }
+            50% { text-shadow: 0 4px 6px rgba(0,0,0,0.3), 0 0 40px rgba(255,255,255,0.5); }
+        }
+
+        .typing-text {
+            font-size: 1.5rem;
             opacity: 0.95;
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            min-height: 2rem;
         }
 
-        /* About Section */
-        .about {
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.3rem;
             background: white;
+            margin-left: 5px;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator::before {
+            content: '↓';
+            font-size: 2rem;
+            color: white;
+            opacity: 0.7;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-20px); }
+            60% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        /* Cards with 3D Effect */
+        .card-3d {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 3rem;
             margin-bottom: 3rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            animation: fadeInUp 1s ease 0.2s backwards;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
         }
 
-        .about h2 {
+        .card-3d:hover {
+            transform: translateY(-10px) rotateX(5deg);
+        }
+
+        .about h2, .skills h2 {
             color: #667eea;
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin-bottom: 1.5rem;
             text-align: center;
+            position: relative;
+            display: inline-block;
+            width: 100%;
         }
 
-        .about p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #555;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 2rem;
+        .about h2::after, .skills h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
         }
 
-        /* Stats Section */
+        /* Animated Stats */
         .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -82,162 +188,170 @@
 
         .stat-card {
             text-align: center;
-            padding: 1.5rem;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
             border-radius: 15px;
-            transition: transform 0.3s;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(102, 126, 234, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .stat-card:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
         }
 
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: bold;
             color: #667eea;
             display: block;
             margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
         }
 
-        .stat-label {
-            color: #666;
-            font-weight: 600;
-        }
-
-        /* Skills Section */
-        .skills {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
-            margin-bottom: 3rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            animation: fadeInUp 1s ease 0.4s backwards;
-        }
-
-        .skills h2 {
-            color: #667eea;
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
+        /* Skill Bars with Animation */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
 
         .skill-item {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateX(-50px);
+            animation: slideInLeft 0.6s forwards;
         }
 
-        .skill-name {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #333;
+        .skill-item:nth-child(1) { animation-delay: 0.1s; }
+        .skill-item:nth-child(2) { animation-delay: 0.2s; }
+        .skill-item:nth-child(3) { animation-delay: 0.3s; }
+        .skill-item:nth-child(4) { animation-delay: 0.4s; }
+        .skill-item:nth-child(5) { animation-delay: 0.5s; }
+        .skill-item:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .skill-bar {
-            background: #f0f0f0;
-            height: 10px;
+            background: #e0e0e0;
+            height: 12px;
             border-radius: 10px;
             overflow: hidden;
+            position: relative;
         }
 
         .skill-progress {
-            background: linear-gradient(90deg, #667eea, #764ba2);
             height: 100%;
             border-radius: 10px;
-            transition: width 1s ease;
+            position: relative;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            animation: fillBar 2s ease-out forwards;
+            transform-origin: left;
         }
 
-        /* Projects Grid */
-        .projects-section {
-            margin-bottom: 3rem;
+        .skill-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
         }
 
-        .section-title {
-            text-align: center;
-            color: white;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            animation: fadeIn 1s ease 0.5s backwards;
+        @keyframes fillBar {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
         }
 
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Project Cards with Flip Effect */
         .projects {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
-            animation: fadeInUp 1s ease 0.6s backwards;
         }
 
         .project-card {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 2.5rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
             position: relative;
             overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
         }
 
         .project-card::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
+            left: -100%;
             width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
         }
 
         .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.3);
         }
 
         .project-icon {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 1.5rem;
+            display: inline-block;
+            animation: rotate 20s linear infinite;
         }
 
-        .project-card h2 {
-            font-size: 1.8rem;
-            color: #667eea;
-            margin-bottom: 1rem;
+        .project-card:hover .project-icon {
+            animation: bounce 0.6s ease;
         }
 
-        .project-card p {
-            color: #666;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .tag {
-            background: #f0f0f0;
-            color: #667eea;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 1rem;
-        }
-
+        /* Button Interactions */
         .btn {
             padding: 0.8rem 1.5rem;
             border-radius: 50px;
@@ -247,50 +361,70 @@
             display: inline-block;
             text-align: center;
             flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
         .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
         }
 
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid #667eea;
-            color: #667eea;
+        .btn-primary:active {
+            transform: translateY(-1px);
         }
 
-        .btn-secondary:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        /* Contact Section */
+        /* Contact Section with Pulse Effect */
         .contact {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 3rem;
             margin-bottom: 3rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             text-align: center;
-            animation: fadeInUp 1s ease 0.8s backwards;
+            position: relative;
+            overflow: hidden;
         }
 
-        .contact h2 {
-            color: #667eea;
-            font-size: 2rem;
-            margin-bottom: 1rem;
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
         }
 
-        .contact p {
-            color: #666;
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
         }
 
         .contact-buttons {
@@ -298,6 +432,8 @@
             justify-content: center;
             gap: 1rem;
             flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
         }
 
         /* Footer */
@@ -306,132 +442,89 @@
             color: white;
             padding: 2rem 0;
             border-top: 2px solid rgba(255,255,255,0.2);
-            animation: fadeIn 1s ease 1s backwards;
-        }
-
-        footer p {
-            opacity: 0.9;
-            margin-bottom: 1rem;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 1rem;
         }
 
         .social-links a {
             color: white;
             text-decoration: none;
             font-size: 1.1rem;
-            transition: transform 0.3s;
+            transition: all 0.3s;
+            display: inline-block;
+            margin: 0 1rem;
         }
 
         .social-links a:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px) scale(1.1);
+            text-shadow: 0 5px 15px rgba(255,255,255,0.5);
         }
 
-        /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* Section Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease-out;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .projects {
-                grid-template-columns: 1fr;
-            }
-
-            .project-links {
-                flex-direction: column;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
+            .hero h1 { font-size: 2.5rem; }
+            .typing-text { font-size: 1.2rem; }
+            .projects { grid-template-columns: 1fr; }
+            .skills-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
+    <div class="bg-animation"></div>
+    
     <div class="container">
         <!-- Hero Section -->
         <div class="hero">
             <h1>Akshaj Goel</h1>
-            <p>Student Developer | 10th Grade | Building for Impact</p>
+            <div class="typing-text" id="typingText"></div>
+            <div class="scroll-indicator"></div>
         </div>
 
         <!-- About Section -->
-        <div class="about">
+        <div class="about card-3d reveal">
             <h2>About Me</h2>
             <p>I'm a 10th-grade student from Delhi, India, passionate about building software that solves real problems. Currently learning Python, web development, and exploring AI/ML concepts. My goal is to pursue engineering at MIT and create tools that make a difference in education and beyond.</p>
             <p>I believe in open-source, privacy-first software, and learning by building. When I'm not coding, you'll find me participating in Model UN, writing on my blog, or diving deep into technology documentation.</p>
 
-            <!-- Stats -->
             <div class="stats">
                 <div class="stat-card">
-                    <span class="stat-number">10th</span>
+                    <span class="stat-number" data-target="10">0</span>
                     <span class="stat-label">Grade Student</span>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-number">2+</span>
+                    <span class="stat-number" data-target="2">0</span>
                     <span class="stat-label">Live Projects</span>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-number">1st</span>
+                    <span class="stat-number" data-target="1">0</span>
                     <span class="stat-label">Hackathon</span>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-number">100%</span>
+                    <span class="stat-number" data-target="100">0</span>
                     <span class="stat-label">Open Source</span>
                 </div>
             </div>
         </div>
 
         <!-- Skills Section -->
-        <div class="skills">
+        <div class="skills card-3d reveal">
             <h2>Skills & Technologies</h2>
             <div class="skills-grid">
                 <div>
                     <div class="skill-item">
                         <div class="skill-name">
                             <span>Python</span>
-                            <span>Intermediate</span>
+                            <span>70%</span>
                         </div>
                         <div class="skill-bar">
                             <div class="skill-progress" style="width: 70%"></div>
@@ -440,7 +533,7 @@
                     <div class="skill-item">
                         <div class="skill-name">
                             <span>HTML/CSS</span>
-                            <span>Proficient</span>
+                            <span>85%</span>
                         </div>
                         <div class="skill-bar">
                             <div class="skill-progress" style="width: 85%"></div>
@@ -449,7 +542,7 @@
                     <div class="skill-item">
                         <div class="skill-name">
                             <span>Git/GitHub</span>
-                            <span>Intermediate</span>
+                            <span>65%</span>
                         </div>
                         <div class="skill-bar">
                             <div class="skill-progress" style="width: 65%"></div>
@@ -460,7 +553,7 @@
                     <div class="skill-item">
                         <div class="skill-name">
                             <span>JavaScript</span>
-                            <span>Learning</span>
+                            <span>40%</span>
                         </div>
                         <div class="skill-bar">
                             <div class="skill-progress" style="width: 40%"></div>
@@ -469,7 +562,7 @@
                     <div class="skill-item">
                         <div class="skill-name">
                             <span>AI/ML Concepts</span>
-                            <span>Learning</span>
+                            <span>35%</span>
                         </div>
                         <div class="skill-bar">
                             <div class="skill-progress" style="width: 35%"></div>
@@ -478,7 +571,7 @@
                     <div class="skill-item">
                         <div class="skill-name">
                             <span>Problem Solving</span>
-                            <span>Strong</span>
+                            <span>80%</span>
                         </div>
                         <div class="skill-bar">
                             <div class="skill-progress" style="width: 80%"></div>
@@ -490,10 +583,8 @@
 
         <!-- Projects Section -->
         <div class="projects-section">
-            <h2 class="section-title">My Projects</h2>
             <div class="projects">
-                <!-- EduMerge Project -->
-                <div class="project-card">
+                <div class="project-card reveal">
                     <div class="project-icon">📝</div>
                     <h2>EduMerge</h2>
                     <p>Student text editor with powerful mail merge capabilities. Built with Python for document automation—privacy-first, local processing, zero subscriptions.</p>
@@ -504,12 +595,10 @@
                     </div>
                     <div class="project-links">
                         <a href="https://aksweb.me/EduMerge-Website" class="btn btn-primary">View Project</a>
-                        <a href="https://aksweb.me/EduMerge-Documentation" class="btn btn-secondary">Docs</a>
                     </div>
                 </div>
 
-                <!-- Pollution Website -->
-                <div class="project-card">
+                <div class="project-card reveal">
                     <div class="project-icon">🌍</div>
                     <h2>Pollution Awareness</h2>
                     <p>Educational website exploring air pollution, its causes, health impacts, and solutions. Features data-driven insights on Delhi's air quality crisis.</p>
@@ -523,8 +612,7 @@
                     </div>
                 </div>
 
-                <!-- Future Projects Placeholder -->
-                <div class="project-card" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1)); border: 2px dashed #667eea;">
+                <div class="project-card reveal" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1)); border: 2px dashed #667eea;">
                     <div class="project-icon">🚀</div>
                     <h2>More Coming Soon</h2>
                     <p>Currently working on new projects combining AI, web development, and problem-solving. Follow my journey on GitHub!</p>
@@ -541,13 +629,13 @@
         </div>
 
         <!-- Contact Section -->
-        <div class="contact">
+        <div class="contact reveal">
             <h2>Let's Connect</h2>
             <p>Interested in collaborating or just want to chat about tech? Feel free to reach out!</p>
             <div class="contact-buttons">
                 <a href="mailto:akshajgoel@bnpsramvihar.edu.in" class="btn btn-primary">Email Me</a>
-                <a href="https://github.com/aksgamigg" target="_blank" class="btn btn-secondary">GitHub</a>
-                <a href="https://codenchords.wordpress.com" target="_blank" class="btn btn-secondary">Blog</a>
+                <a href="https://github.com/aksgamigg" target="_blank" class="btn btn-primary">GitHub</a>
+                <a href="https://codenchords.wordpress.com" target="_blank" class="btn btn-primary">Blog</a>
             </div>
         </div>
 
@@ -562,5 +650,128 @@
             <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.7;">&copy; 2025 Akshaj Goel</p>
         </footer>
     </div>
+
+    <script>
+        // Typing Animation
+        const texts = [
+            "Student Developer | 10th Grade",
+            "Building for Impact",
+            "Aspiring MIT Engineer",
+            "Open Source Enthusiast"
+        ];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typingElement = document.getElementById('typingText');
+
+        function type() {
+            const currentText = texts[textIndex];
+            
+            if (isDeleting) {
+                typingElement.innerHTML = currentText.substring(0, charIndex - 1) + '<span class="cursor"></span>';
+                charIndex--;
+            } else {
+                typingElement.innerHTML = currentText.substring(0, charIndex + 1) + '<span class="cursor"></span>';
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentText.length) {
+                setTimeout(() => isDeleting = true, 2000);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+            }
+
+            const speed = isDeleting ? 50 : 100;
+            setTimeout(type, speed);
+        }
+
+        type();
+
+        // Animated Counter
+        function animateCounter(el) {
+            const target = parseInt(el.getAttribute('data-target'));
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            let current = 0;
+
+            const updateCounter = () => {
+                current += increment;
+                if (current < target) {
+                    el.textContent = Math.floor(current) + (target === 100 ? '%' : 'th').replace('thth', 'th').replace('%th', '%');
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    el.textContent = target + (target === 100 ? '%' : target === 10 ? 'th' : target === 1 ? 'st' : '+');
+                }
+            };
+            updateCounter();
+        }
+
+        // Intersection Observer for Reveal Animation
+        const reveals = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        reveals.forEach(reveal => revealObserver.observe(reveal));
+
+        // Animate stats when visible
+        const statCards = document.querySelectorAll('.stat-card');
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target.querySelector('.stat-number');
+                    if (counter && !counter.classList.contains('animated')) {
+                        counter.classList.add('animated');
+                        animateCounter(counter);
+                    }
+                }
+            });
+        }, { threshold: 0.5 });
+
+        statCards.forEach(card => statsObserver.observe(card));
+
+        // Create floating particles
+        function createParticles() {
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = Math.random() * 5 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDuration = Math.random() * 10 + 10 + 's';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                document.body.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        // 3D Card Tilt Effect
+        document.querySelectorAll('.card-3d').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+            });
+        });
+    </script>
 </body>
 </html>
