@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Class 10 Trigonometry – CBSE</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #050507;
+            --bg-soft: rgba(10, 10, 18, 0.9);
+            --card-bg: rgba(15, 15, 30, 0.9);
+            --border-soft: rgba(255, 255, 255, 0.08);
+            --border-strong: rgba(255, 255, 255, 0.16);
+            --accent: #ff6bcb;
+            --accent-2: #40f8ff;
+            --accent-3: #ffe66d;
+            --text-main: #f5f5ff;
+            --text-muted: #9ca3af;
+            --danger: #ff4d6a;
+            --safe: #4ade80;
+            --shadow-glow: 0 0 30px rgba(64, 248, 255, 0.4);
+            --radius-lg: 18px;
+            --radius-pill: 999px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        html, body {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            background: radial-gradient(circle at top, #101020 0, #050507 45%, #020306 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* CUSTOM SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--accent-2), var(--accent));
+            border-radius: 999px;
+            border: 2px solid #020617;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #7af3ff, #ff8dd8);
+        }
+
+        /* Starfield background */
+        canvas#starfield {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+        }
+
+        .noise-overlay {
+            pointer-events: none;
+            position: fixed;
+            inset: 0;
+            opacity: 0.08;
+            z-index: -1;
+            background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+            mix-blend-mode: soft-light;
+        }
+
+        /* Custom cursor */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            border-radius: 50%;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-2);
+            box-shadow: 0 0 10px rgba(64, 248, 255, 0.9);
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            transition: width 0.2s, height 0.2s, border-color 0.2s;
+        }
+
+        body.hovering .cursor-outline {
+            width: 60px;
+            height: 60px;
+            border-color: var(--accent);
+            background: rgba(255, 107, 203, 0.05);
+        }
+
+        /* Layout */
+        .page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.25rem 1.25rem 3rem;
+        }
+
+        /* PERMANENT STICKY HEADER */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 1rem;
+            z-index: 100;
+            background: rgba(5, 5, 7, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 0.75rem 1.25rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+        }
+
+        .logo {
+            display: flex;
+            align-items: baseline;
+            gap: 0.4rem;
+            font-family: "Space Grotesk", system-ui, sans-serif;
+            letter-spacing: 0.06em;
+        }
+
+        .logo-tag {
+            color: var(--accent-2);
+            font-size: 1.4rem;
+        }
+
+        .logo-text {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--accent-2);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 3rem 1rem;
+        }
+
+        .hero h1 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-2), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Section Styles */
+        section {
+            margin-bottom: 4rem;
+        }
+
+        h2 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--accent-2);
+        }
+
+        h3 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        p {
+            line-height: 1.8;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-strong);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        thead {
+            background: linear-gradient(135deg, rgba(64, 248, 255, 0.1), rgba(255, 107, 203, 0.1));
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--accent-2);
+            border-bottom: 2px solid var(--border-strong);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-soft);
+            color: var(--text-main);
+        }
+
+        tr:hover {
+            background: rgba(64, 248, 255, 0.05);
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, rgba(64, 248, 255, 0.1), rgba(255, 107, 203, 0.1));
+            border: 2px solid var(--accent-2);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: "Space Grotesk", monospace;
+            font-size: 1.1rem;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(64, 248, 255, 0.2);
+        }
+
+        /* List Styles */
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        /* Grid Layout for Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Highlight Box */
+        .highlight {
+            background: linear-gradient(135deg, rgba(255, 230, 109, 0.1), rgba(255, 107, 203, 0.1));
+            border-left: 4px solid var(--accent-3);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            nav {
+                gap: 1rem;
+            }
+
+            nav a {
+                font-size: 0.8rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-soft);
+            color: var(--text-muted);
+        }
+
+        footer a {
+            color: var(--accent-2);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="starfield"></canvas>
+    <div class="noise-overlay"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <div class="page">
+        <!-- PERMANENT STICKY HEADER -->
+        <header>
+            <div class="logo">
+                <span class="logo-tag">&lt;/&gt;</span>
+                <span class="logo-text">TRIGONOMETRY</span>
+            </div>
+            <nav>
+                <a href="#intro">Intro</a>
+                <a href="#ratios">Ratios</a>
+                <a href="#identities">Identities</a>
+                <a href="#values">Values</a>
+                <a href="#applications">Applications</a>
+            </nav>
+        </header>
+
+        <!-- HERO SECTION -->
+        <div class="hero">
+            <h1>CBSE Class 10 Trigonometry</h1>
+            <p>Master the angles, ratios, and identities that form the foundation of advanced mathematics and real-world problem solving.</p>
+        </div>
+
+        <!-- INTRODUCTION SECTION -->
+        <section id="intro">
+            <h2>What is Trigonometry?</h2>
+            <div class="card">
+                <p>Trigonometry is the branch of mathematics that studies relationships between the sides and angles of triangles. The word comes from Greek words "trigonon" (triangle) and "metron" (measure).</p>
+                <p>In Class 10 CBSE, we focus on right-angled triangles and explore six fundamental ratios that help us solve problems in fields like physics, engineering, architecture, and astronomy.</p>
+
+                <div class="highlight">
+                    <strong>Key Concept:</strong> In a right-angled triangle, the relationship between any two sides depends only on the angle, not the size of the triangle. This makes trigonometric ratios incredibly powerful!
+                </div>
+            </div>
+        </section>
+
+        <!-- TRIGONOMETRIC RATIOS SECTION -->
+        <section id="ratios">
+            <h2>The Six Trigonometric Ratios</h2>
+
+            <div class="card">
+                <h3>Understanding the Triangle</h3>
+                <p>Consider a right-angled triangle with one acute angle θ (theta). We define three sides relative to this angle:</p>
+                <ul>
+                    <li><strong>Hypotenuse:</strong> The longest side, opposite to the right angle</li>
+                    <li><strong>Perpendicular (Opposite):</strong> The side opposite to angle θ</li>
+                    <li><strong>Base (Adjacent):</strong> The side adjacent to angle θ</li>
+                </ul>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <h3>sin θ (Sine)</h3>
+                    <div class="formula-box">
+                        sin θ = Perpendicular / Hypotenuse
+                    </div>
+                    <p>Sine represents the ratio of the side opposite to the angle and the hypotenuse.</p>
+                </div>
+
+                <div class="card">
+                    <h3>cos θ (Cosine)</h3>
+                    <div class="formula-box">
+                        cos θ = Base / Hypotenuse
+                    </div>
+                    <p>Cosine represents the ratio of the side adjacent to the angle and the hypotenuse.</p>
+                </div>
+
+                <div class="card">
+                    <h3>tan θ (Tangent)</h3>
+                    <div class="formula-box">
+                        tan θ = Perpendicular / Base
+                    </div>
+                    <p>Tangent is the ratio of the opposite side to the adjacent side. Also: tan θ = sin θ / cos θ</p>
+                </div>
+
+                <div class="card">
+                    <h3>cot θ (Cotangent)</h3>
+                    <div class="formula-box">
+                        cot θ = Base / Perpendicular
+                    </div>
+                    <p>Cotangent is the reciprocal of tangent. Also: cot θ = 1 / tan θ = cos θ / sin θ</p>
+                </div>
+
+                <div class="card">
+                    <h3>sec θ (Secant)</h3>
+                    <div class="formula-box">
+                        sec θ = Hypotenuse / Base
+                    </div>
+                    <p>Secant is the reciprocal of cosine: sec θ = 1 / cos θ</p>
+                </div>
+
+                <div class="card">
+                    <h3>cosec θ (Cosecant)</h3>
+                    <div class="formula-box">
+                        cosec θ = Hypotenuse / Perpendicular
+                    </div>
+                    <p>Cosecant is the reciprocal of sine: cosec θ = 1 / sin θ</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Reciprocal Relationships</h3>
+                <div class="formula-box">
+                    sin θ × cosec θ = 1<br>
+                    cos θ × sec θ = 1<br>
+                    tan θ × cot θ = 1
+                </div>
+            </div>
+        </section>
+
+        <!-- STANDARD VALUES SECTION -->
+        <section id="values">
+            <h2>Standard Trigonometric Values</h2>
+
+            <div class="card">
+                <p>These are the most important values you'll use in problem-solving. Memorize them—they appear everywhere in Class 10 exams and beyond!</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Angle (θ)</th>
+                                <th>0°</th>
+                                <th>30°</th>
+                                <th>45°</th>
+                                <th>60°</th>
+                                <th>90°</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>sin θ</strong></td>
+                                <td>0</td>
+                                <td>1/2</td>
+                                <td>1/√2</td>
+                                <td>√3/2</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td><strong>cos θ</strong></td>
+                                <td>1</td>
+                                <td>√3/2</td>
+                                <td>1/√2</td>
+                                <td>1/2</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td><strong>tan θ</strong></td>
+                                <td>0</td>
+                                <td>1/√3</td>
+                                <td>1</td>
+                                <td>√3</td>
+                                <td>Not Defined</td>
+                            </tr>
+                            <tr>
+                                <td><strong>cot θ</strong></td>
+                                <td>Not Defined</td>
+                                <td>√3</td>
+                                <td>1</td>
+                                <td>1/√3</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td><strong>sec θ</strong></td>
+                                <td>1</td>
+                                <td>2/√3</td>
+                                <td>√2</td>
+                                <td>2</td>
+                                <td>Not Defined</td>
+                            </tr>
+                            <tr>
+                                <td><strong>cosec θ</strong></td>
+                                <td>Not Defined</td>
+                                <td>2</td>
+                                <td>√2</td>
+                                <td>2/√3</td>
+                                <td>1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="highlight">
+                    <strong>Pro Tip:</strong> Notice the pattern! For sin θ, the values go 0, 1/2, 1/√2, √3/2, 1. For cos θ, they're reversed. This symmetry makes memorization easier!
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Decimal Approximations (for quick calculations)</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Value</th>
+                                <th>Exact</th>
+                                <th>Approximate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1/√2</td>
+                                <td>1/√2</td>
+                                <td>≈ 0.707</td>
+                            </tr>
+                            <tr>
+                                <td>√3/2</td>
+                                <td>√3/2</td>
+                                <td>≈ 0.866</td>
+                            </tr>
+                            <tr>
+                                <td>1/√3</td>
+                                <td>1/√3</td>
+                                <td>≈ 0.577</td>
+                            </tr>
+                            <tr>
+                                <td>√3</td>
+                                <td>√3</td>
+                                <td>≈ 1.732</td>
+                            </tr>
+                            <tr>
+                                <td>√2</td>
+                                <td>√2</td>
+                                <td>≈ 1.414</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRIGONOMETRIC IDENTITIES SECTION -->
+        <section id="identities">
+            <h2>Trigonometric Identities</h2>
+
+            <div class="card">
+                <p>Identities are equations that are true for all values of the variable. These are essential for simplifying expressions and solving complex problems.</p>
+            </div>
+
+            <div class="card">
+                <h3>Pythagorean Identities</h3>
+                <div class="formula-box">
+                    sin²θ + cos²θ = 1
+                </div>
+                <p>This is the fundamental identity derived from the Pythagorean theorem. From this, we get two more:</p>
+                <div class="formula-box">
+                    1 + tan²θ = sec²θ<br><br>
+                    1 + cot²θ = cosec²θ
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Quotient Identities</h3>
+                <div class="formula-box">
+                    tan θ = sin θ / cos θ<br><br>
+                    cot θ = cos θ / sin θ
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Complementary Angle Identities</h3>
+                <p>For complementary angles (angles that sum to 90°):</p>
+                <div class="formula-box">
+                    sin(90° - θ) = cos θ<br>
+                    cos(90° - θ) = sin θ<br>
+                    tan(90° - θ) = cot θ<br>
+                    cot(90° - θ) = tan θ<br>
+                    sec(90° - θ) = cosec θ<br>
+                    cosec(90° - θ) = sec θ
+                </div>
+            </div>
+
+            <div class="highlight">
+                <strong>Remember:</strong> When you subtract an angle from 90°, sine becomes cosine and vice versa. Same pattern for tan-cot and sec-cosec!
+            </div>
+        </section>
+
+        <!-- APPLICATIONS SECTION -->
+        <section id="applications">
+            <h2>Real-World Applications</h2>
+
+            <div class="grid">
+                <div class="card">
+                    <h3>Heights and Distances</h3>
+                    <p>Calculate the height of buildings, towers, and mountains without physically measuring them. Uses angle of elevation and angle of depression.</p>
+                    <p><strong>Example:</strong> Finding the height of a tower by measuring the angle of elevation from a known distance.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Navigation</h3>
+                    <p>Ships and aircraft use trigonometry to calculate distances, bearings, and routes across the globe.</p>
+                    <p><strong>Example:</strong> Determining the shortest path between two points on Earth's surface.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Architecture & Engineering</h3>
+                    <p>Designing structures, calculating load distributions, and determining angles for optimal stability.</p>
+                    <p><strong>Example:</strong> Calculating roof slopes, bridge angles, and structural stress points.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Astronomy</h3>
+                    <p>Measuring distances to stars, calculating planetary orbits, and predicting celestial events.</p>
+                    <p><strong>Example:</strong> Using parallax method to find distances to nearby stars.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Physics & Waves</h3>
+                    <p>Analyzing periodic motion, sound waves, light waves, and electromagnetic radiation.</p>
+                    <p><strong>Example:</strong> Describing simple harmonic motion and AC circuits.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Computer Graphics</h3>
+                    <p>Rotating objects, calculating camera angles, and rendering 3D scenes in games and simulations.</p>
+                    <p><strong>Example:</strong> Game engines use trig for character movement and camera positioning.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROBLEM SOLVING TIPS SECTION -->
+        <section>
+            <h2>Problem-Solving Strategy</h2>
+
+            <div class="card">
+                <h3>Step-by-Step Approach</h3>
+                <ol>
+                    <li><strong>Draw a diagram:</strong> Always sketch the right-angled triangle and label all known values</li>
+                    <li><strong>Identify the angle:</strong> Mark the angle you're working with clearly</li>
+                    <li><strong>Label the sides:</strong> Identify perpendicular, base, and hypotenuse relative to your angle</li>
+                    <li><strong>Choose the right ratio:</strong> Pick the trig ratio that connects the known and unknown sides</li>
+                    <li><strong>Substitute and solve:</strong> Plug in values and calculate</li>
+                    <li><strong>Check your answer:</strong> Does it make sense? Are the units correct?</li>
+                </ol>
+            </div>
+
+            <div class="card">
+                <h3>Common Mistakes to Avoid</h3>
+                <ul>
+                    <li>Mixing up perpendicular and base relative to the angle</li>
+                    <li>Forgetting to convert angles to the correct unit (degrees vs radians)</li>
+                    <li>Using the wrong identity or reciprocal relationship</li>
+                    <li>Not simplifying radicals in final answers</li>
+                    <li>Dividing by zero (when tan 90° or cot 0° appear)</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <strong>Exam Tip:</strong> In CBSE exams, always show your work step-by-step. Even if the final answer is wrong, you can get partial credit for using the correct method!
+            </div>
+        </section>
+
+        <!-- QUICK REFERENCE SECTION -->
+        <section>
+            <h2>Quick Reference Guide</h2>
+
+            <div class="card">
+                <h3>Formula Sheet</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Formula</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Basic Ratios</td>
+                                <td>sin θ = P/H, cos θ = B/H, tan θ = P/B</td>
+                            </tr>
+                            <tr>
+                                <td>Reciprocals</td>
+                                <td>cosec θ = 1/sin θ, sec θ = 1/cos θ, cot θ = 1/tan θ</td>
+                            </tr>
+                            <tr>
+                                <td>Pythagorean</td>
+                                <td>sin²θ + cos²θ = 1, 1 + tan²θ = sec²θ, 1 + cot²θ = cosec²θ</td>
+                            </tr>
+                            <tr>
+                                <td>Complementary</td>
+                                <td>sin(90° - θ) = cos θ, cos(90° - θ) = sin θ</td>
+                            </tr>
+                            <tr>
+                                <td>Quotient</td>
+                                <td>tan θ = sin θ/cos θ, cot θ = cos θ/sin θ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Memory Tricks</h3>
+                <ul>
+                    <li><strong>SOH-CAH-TOA:</strong> Sine = Opposite/Hypotenuse, Cosine = Adjacent/Hypotenuse, Tangent = Opposite/Adjacent</li>
+                    <li><strong>For 0°, 30°, 45°, 60°, 90°:</strong> sin values are √0/2, √1/2, √2/2, √3/2, √4/2</li>
+                    <li><strong>Complementary trick:</strong> "Co" means complement (90° - θ)</li>
+                    <li><strong>Reciprocal pairs:</strong> sin-cosec, cos-sec, tan-cot always multiply to give 1</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <p>Made with ⚡ for CBSE Class 10 students | <a href="https://aksweb.me" target="_blank">aksweb.me</a></p>
+            <p style="margin-top: 0.5rem; font-size: 0.85rem;">Master trigonometry, master the universe 🚀</p>
+        </footer>
+    </div>
+
+    <script>
+        // =====================
+        // CUSTOM CURSOR
+        // =====================
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+
+        document.addEventListener('mousemove', (e) => {
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+
+            cursorOutline.style.left = e.clientX + 'px';
+            cursorOutline.style.top = e.clientY + 'px';
+        });
+
+        // Hover effects
+        const interactiveElements = document.querySelectorAll('a, button, .card');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                document.body.classList.add('hovering');
+            });
+            el.addEventListener('mouseleave', () => {
+                document.body.classList.remove('hovering');
+            });
+        });
+
+        // =====================
+        // STARFIELD BACKGROUND
+        // =====================
+        const canvas = document.getElementById('starfield');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = document.body.scrollHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const stars = [];
+        const numStars = 200;
+
+        for (let i = 0; i < numStars; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 1.5,
+                opacity: Math.random(),
+                twinkleSpeed: Math.random() * 0.02 + 0.005
+            });
+        }
+
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(star => {
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+                ctx.fill();
+
+                star.opacity += star.twinkleSpeed;
+                if (star.opacity > 1 || star.opacity < 0.2) {
+                    star.twinkleSpeed *= -1;
+                }
+            });
+            requestAnimationFrame(drawStars);
+        }
+        drawStars();
+
+        // =====================
+        // SMOOTH SCROLL
+        // =====================
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
