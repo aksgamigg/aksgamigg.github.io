@@ -106,7 +106,6 @@ Interactive data visualization platform for Delhi's air quality crisis.
 
 ## 📱 Responsive & Accessible
 
-- ✅ Mobile-first design
 - ✅ Keyboard navigation support
 - ✅ Semantic HTML for screen readers
 - ✅ Focus states on all interactive elements
@@ -132,7 +131,7 @@ See [SECURITY.md](SECURITY.md) for full details and safe harbor pledge.
 
 - **Location:** New Delhi, India 🇮🇳
 - **Grade:** 10th (CBSE)
-- **Target:** MIT Class of '31
+- **Target:** MIT
 - **Interests:** Web development, AI/ML, Python automation, Policy & Economics
 - **GitHub:** [@aksgamigg](https://github.com/aksgamigg)
 - **Blog:** [codenchords.wordpress.com](https://codenchords.wordpress.com)
