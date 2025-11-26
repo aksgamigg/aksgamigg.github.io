@@ -954,7 +954,7 @@
                             <span class="highlight-text">computer engineering</span> and <span class="highlight-text">global economics</span>.
                         </p>
                         <p>
-                            While others play games, I build themâ€”and the tools to make them. I analyze UN tariffs in the morning and debug Python scripts at night. 
+                            While others play games, I build them—and the tools to make them. I analyze UN tariffs in the morning and debug Python scripts at night. 
                             My mission is simple: gain mastery over the machine, contribute to open-source, and earn my place at MIT.
                         </p>
                         <p>
@@ -1036,6 +1036,22 @@
             </div>
 
             <div class="projects-grid">
+
+<div class="project-card reveal-up" onclick="openModal('andaman')">
+    <div class="project-image-holder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+    </div>
+    <div class="project-body">
+        <h3 class="project-title">Andaman Biodiversity</h3>
+        <p class="project-desc">A web experience focused on the unique flora, fauna, and fragile ecosystems of the Andaman & Nicobar Islands.</p>
+        <div class="tech-stack">
+            <span class="tech-tag">HTML5</span>
+            <span class="tech-tag">CSS3</span>
+            <span class="tech-tag">JavaScript</span>
+        </div>
+    </div>
+</div>
+
                 <!-- Project 1 -->
                 <div class="project-card reveal-up" onclick="openModal('edumerge')">
                     <div class="project-image-holder">
@@ -1266,8 +1282,8 @@
             help: "Available commands: about, projects, social, email, clear, whoami, date",
             whoami: "guest@akshaj-portfolio (Level: Visitor)",
             about: "Akshaj Goel | 10th Grade Developer | Aspiring MIT Engineer | Python & Web Enthusiast.",
-            projects: "1. EduMerge (Python Automation)\n2. Pollution Awareness (Web Platform)\nType 'open edumerge' to view.",
-            social: "GitHub: aksgamigg\nBlog: codenchords.wordpress.com",
+            projects: "1. EduMerge (Python Automation)\\n2. Pollution Awareness (Web Platform)\\nType 'open edumerge' to view.",
+            social: "GitHub: aksgamigg\\nBlog: codenchords.wordpress.com",
             email: "akshajgoel@bnpsramvihar.edu.in",
             date: new Date().toString(),
             clear: "CLEAR_Screen"
@@ -1404,5 +1420,36 @@
         });
 
     </script>
+
+<div class="modal-overlay" id="modal-andaman">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="project-title">Andaman Biodiversity</h2>
+            <button class="modal-close" onclick="closeModal('andaman')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>An educational website exploring the rich biodiversity of the Andaman & Nicobar Islands: coral reefs, mangroves, endemic birds, and rainforest ecosystems.</p>
+
+            <h4>Tech Stack</h4>
+            <div class="tech-stack">
+                <span class="tech-tag">HTML5</span>
+                <span class="tech-tag">CSS3</span>
+                <span class="tech-tag">JavaScript</span>
+            </div>
+
+            <h4>Objectives</h4>
+            <ul>
+                <li>Highlight key flora and fauna species.</li>
+                <li>Explain fragile ecosystems and conservation challenges.</li>
+                <li>Use visuals and clean UI to make learning engaging.</li>
+            </ul>
+
+            <div class="modal-links">
+                <a href="https://aksweb.me/Andaman-Nicobar" target="_blank" class="btn btn-primary">Visit Website</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
